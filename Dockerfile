@@ -9,9 +9,9 @@ MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 RUN add-apt-repository ppa:jonathonf/python-3.6 && \
     apt-get update && apt-get install -y --no-install-recommends \
     python3.6 \
-	  python3.6-dev \
-	  python3.6-venv \
-	  && \ 
+    python3.6-dev \
+    python3.6-venv \
+    && \ 
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
 	
@@ -42,9 +42,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  
 RUN python3.6 -m pip --no-cache-dir install \ 
         Pillow \
-		    toposort \
-		    networkx \
-		    pytest \
+        toposort \
+        networkx \
+        pytest \
         h5py \
         ipykernel \
         jupyter \
@@ -53,19 +53,19 @@ RUN python3.6 -m pip --no-cache-dir install \
         pandas \
         scipy \
         sklearn \
-		    tensorlayer \
-		    scikit-learn \
-		    tqdm \
-		    click==6.7 \
+        tensorlayer \
+	scikit-learn \
+        tqdm \
+        click==6.7 \
         more_itertools \
-	      utils \
-	      bs4 \
-	      opencv-python \
-	      python3-utils \
-	      scikit-image \
-	      xmltodict \
-		    easydict \
-	      urllib3==1.21.1 \
+	utils \
+	bs4 \
+	opencv-python \
+	python3-utils \
+	scikit-image \
+	xmltodict \
+        easydict \
+	urllib3==1.21.1 \
         && \
     python3.6 -m ipykernel.kernelspec \
 	      && \
