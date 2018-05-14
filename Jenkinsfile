@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Create Docker-Build Image For Tensorflow-GPU-MKL') {
             steps {
-	              sh 'docker build -t yi/tflow-vnc:1.8.0 .'  
+	              sh 'docker build -t yi/tflow-vnc:1.8.0-python-3.6.3 .'  
             }
         }
 	      stage('Test Docker-Build Image') { 
