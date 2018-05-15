@@ -79,7 +79,7 @@ RUN python3.6 -m pip --no-cache-dir install \
 ###################################
 
   RUN cd /
-  RUN curl --netrc-file /.netrc ftp://yifileserver/DOCKER_IMAGES/Tensorflow/Tensorflow-1.8.0-9.0-cudnn7-devel-ubuntu16.04-Server_19.20/tensorflow-1.8.0-cp36-cp36m-linux_x86_64.whl -o tensorflow-1.8.0-cp36-cp36m-linux_x86_64.whl && \
+  RUN curl --netrc-file .netrc ftp://yifileserver/DOCKER_IMAGES/Tensorflow/Tensorflow-1.8.0-9.0-cudnn7-devel-ubuntu16.04-Server_19.20/tensorflow-1.8.0-cp36-cp36m-linux_x86_64.whl -o tensorflow-1.8.0-cp36-cp36m-linux_x86_64.whl && \
       pip --no-cache-dir install --upgrade /tensorflow-1.*-linux_x86_64.whl && \
       rm -f /tensorflow-1.*-linux_x86_64.whl   
 
