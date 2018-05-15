@@ -78,9 +78,11 @@ RUN python3.6 -m pip --no-cache-dir install \
 # Install TensorFlow GPU version. #
 ###################################
 
-  COPY tensorflow-1.*-linux_x86_64.whl / 
-  RUN pip --no-cache-dir install --upgrade /tensorflow-1.*-linux_x86_64.whl
-  RUN rm -f /tensorflow-1.*-linux_x86_64.whl   
+  RUN cd /
+  ARG TFLOW-GPU=ftp://yifileserver/DOCKER_IMAGES/Tensorflow/Tensorflow-1.8.0-9.0-cudnn7-devel-ubuntu16.04-Server_19.20/tensorflow-1.8.0-cp36-cp36m-linux_x86_64.whl
+  RUN wget --ftps-implicit --no-ftps-resume-ssl -mc -nH ${TFLOW-GPU} && \
+      pip --no-cache-dir install --upgrade /tensorflow-1.*-linux_x86_64.whl && \
+      rm -f /tensorflow-1.*-linux_x86_64.whl   
 
   
 ##################################################
@@ -98,6 +100,9 @@ ENV TF_CUDNN_VERSION=7
 
 ENV LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-COPY lib/. /usr/local/lib
-
+RUN cd /usr/local/lib && \
+    wget --ftps-implicit --no-ftps-resume-ssl -mc -nH ftp://yifileserver/IT/jenkins_8/Server_6/lib/libiomp5.so && \
+    wget --ftps-implicit --no-ftps-resume-ssl -mc -nH ftp://yifileserver/IT/jenkins_8/Server_6/lib/libmklml_gnu.so && \
+    wget --ftps-implicit --no-ftps-resume-ssl -mc -nH ftp://yifileserver/IT/jenkins_8/Server_6/lib/libmklml_intel.so
+    
 ####################################################
