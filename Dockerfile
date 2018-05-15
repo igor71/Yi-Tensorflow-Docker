@@ -2,6 +2,8 @@ FROM yi/tflow-gui:latest
  
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
+ARG TFLOW=tensorflow-1.8.0-cp36-cp36m-linux_x86_64.whl
+
 #################################################
 #     Python 3.6 installations for dev          #
 #################################################
@@ -79,7 +81,8 @@ RUN python3.6 -m pip --no-cache-dir install \
 ###################################
 
   RUN cd /
-  RUN  wget --ftp-user=server --ftp-password=123server123 ftp://yifileserver/DOCKER_IMAGES/Tensorflow/Tensorflow-1.8.0-9.0-cudnn7-devel-ubuntu16.04-Server_19.20/tensorflow-1.8.0-cp36-cp36m-linux_x86_64.whl && \
+  ARG CRED="server:123server123"
+  RUN  curl -u ${CRED} ftp://yifileserver/DOCKER_IMAGES/Tensorflow/Tensorflow-1.8.0-9.0-cudnn7-devel-ubuntu16.04-Server_19.20/${TFLOW} -o ${TFLOW} && \
       pip --no-cache-dir install --upgrade /tensorflow-1.*-linux_x86_64.whl && \
       rm -f /tensorflow-1.*-linux_x86_64.whl   
 
@@ -99,7 +102,6 @@ ENV TF_CUDNN_VERSION=7
 
 ENV LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-ARG CRED="server:123server123"
 RUN cd /usr/local/lib && \
     curl -u ${CRED} ftp://yifileserver/IT/jenkins_8/Server_6/lib/libiomp5.so -o libiomp5.so && \
     curl -u ${CRED} ftp://yifileserver/IT/jenkins_8/Server_6/lib/libmklml_gnu.so -o libmklml_gnu.so && \
