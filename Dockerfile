@@ -83,8 +83,8 @@ RUN python3.6 -m pip --no-cache-dir install \
   RUN cd /
   ARG CRED="server:123server123"
   RUN  curl -u ${CRED} ftp://yifileserver/DOCKER_IMAGES/Tensorflow/Tensorflow-1.8.0-9.0-cudnn7-devel-ubuntu16.04-Server_19.20/${TFLOW} -o ${TFLOW} && \
-      pip --no-cache-dir install --upgrade /tensorflow-1.*-linux_x86_64.whl && \
-      rm -f /tensorflow-1.*-linux_x86_64.whl   
+      pip --no-cache-dir install --upgrade /${TFLOW} && \
+      rm -f /${TFLOW}   
 
   
 ##################################################
@@ -103,8 +103,8 @@ ENV TF_CUDNN_VERSION=7
 ENV LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 RUN cd /usr/local/lib && \
-    curl -u ${CRED} ftp://yifileserver/IT/jenkins_8/Server_6/lib/libiomp5.so -o libiomp5.so && \
-    curl -u ${CRED} ftp://yifileserver/IT/jenkins_8/Server_6/lib/libmklml_gnu.so -o libmklml_gnu.so && \
-    curl -u ${CRED} ftp://yifileserver/IT/jenkins_8/Server_6/lib/libmklml_intel.so -o libmklml_intel.so
+    curl -u ${CRED} ftp://yifileserver/IT/YiIT/lib/libiomp5.so -o libiomp5.so && \
+    curl -u ${CRED} ftp://yifileserver/IT/YiIT/lib/libmklml_gnu.so -o libmklml_gnu.so && \
+    curl -u ${CRED} ftp://yifileserver/IT/YiIT/lib/libmklml_intel.so -o libmklml_intel.so
     
 ####################################################
