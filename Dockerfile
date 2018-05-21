@@ -68,6 +68,7 @@ RUN python3.6 -m pip --no-cache-dir install \
 	scikit-image \
 	xmltodict \
         easydict \
+	tflearn \
 	urllib3==1.21.1 \
         && \
     python3.6 -m ipykernel.kernelspec \
