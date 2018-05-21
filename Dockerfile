@@ -82,7 +82,7 @@ RUN python3.6 -m pip --no-cache-dir install \
 
   RUN cd /
   ARG CRED="server:123server123"
-  RUN  curl -u ${CRED} ftp://yifileserver/DOCKER_IMAGES/Tensorflow/Tensorflow-1.8.0-9.0-cudnn7-devel-ubuntu16.04-Server_19.20/${TFLOW} -o ${TFLOW} && \
+  RUN  curl -u ${CRED} ftp://yifileserver/DOCKER_IMAGES/Tensorflow/Current/${TFLOW} -o ${TFLOW} && \
       pip --no-cache-dir install --upgrade /${TFLOW} && \
       rm -f /${TFLOW}   
 
