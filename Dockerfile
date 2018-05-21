@@ -8,12 +8,15 @@ ARG TFLOW=tensorflow-1.8.0-cp36-cp36m-linux_x86_64.whl
 #     Python 3.6 installations for dev          #
 #################################################
 
+RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
+    python3.6 get-pip.py && \
+    rm get-pip.py 
+
 RUN add-apt-repository ppa:jonathonf/python-3.6 && \
     apt-get update && apt-get install -y --no-install-recommends \
     python3.6 \
     python3.6-dev \
     python3.6-venv \
-    python3.6-distutils \
     && \ 
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
@@ -22,10 +25,7 @@ RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3 && \
     ln -s /usr/local/bin/pip /usr/local/bin/pip3 && \
     ln -s /usr/bin/python3.6 /usr/local/bin/python	
    
-RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
-    python3.6 get-pip.py && \
-    rm get-pip.py 
-
+   
 ################################################################## 
 #              Pick up some TF dependencies                      #
 ##################################################################
