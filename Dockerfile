@@ -11,7 +11,7 @@ ARG TFLOW=tensorflow-1.8.0-cp36-cp36m-linux_x86_64.whl
 RUN add-apt-repository ppa:jonathonf/python-3.6 && \
     apt-get update && apt-get install -y --no-install-recommends \
     python3.6 \
-    python3.6-distutils \
+    python3-distutils \
     python3.6-dev \
     python3.6-venv \
     && \ 
