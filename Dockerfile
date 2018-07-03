@@ -69,6 +69,8 @@ RUN python3.6 -m pip --no-cache-dir install \
 	xmltodict \
         easydict \
 	tflearn \
+	pymongo \
+	sacred \
 	urllib3==1.21.1 \
         && \
     python3.6 -m ipykernel.kernelspec \
