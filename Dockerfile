@@ -2,7 +2,7 @@ FROM yi/tflow-gui:latest
  
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
-ARG TFLOW=tensorflow-1.8.0-cp36-cp36m-linux_x86_64.whl
+ARG TFLOW=tensorflow-1.9.0-cp36-cp36m-linux_x86_64.whl
 
 #################################################
 #     Python 3.6 installations for dev          #
@@ -52,7 +52,7 @@ RUN python3.6 -m pip --no-cache-dir install \
         ipykernel \
         jupyter \
         matplotlib \
-        numpy \
+        numpy==1.14.5 \
         pandas \
         scipy \
         sklearn \
