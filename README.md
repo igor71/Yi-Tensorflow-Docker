@@ -22,7 +22,7 @@ Meaning for server-3 and python 2.7 available tensorflow version: 1.3.1, 1.4.0, 
 2. After verifing desired tensorflow version exist, open in chrome browser:
 
    http://jenkins-cloud:8080/jenkins/job/Build-Yi-Tflow-VNC-Docker-Image/
-
+   
    And click on "Build with Paramerers"
   
    Chose desired options from drop down menus as following
