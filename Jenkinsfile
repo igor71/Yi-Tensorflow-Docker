@@ -17,12 +17,11 @@ pipeline {
         stage('Build Docker Image ') {
             steps {
                 sh '''#!/bin/bash -xe
-                        CRED="server:123server123"
                         SRV=$(echo ${target_server} | awk -F [-] '{print $2}')
-                        curl -u ${CRED} ftp://yifileserver/DOCKER_IMAGES/Tensorflow/Develop/map.csv -o map.csv
+                        curl -OSL ftp://jenkins-cloud/pub/map.csv -o map.csv
                         FTP_PATH=$(awk -F [,] -v srv="$SRV" '$6==srv' map.csv |  awk -F [,] -v python_version="$python_version" '$5==python_version' | awk -F [,] -v tf_version="$tensorflow_version" '$7~tf_version' | awk -F, '{print $4}')
-                        FILE_NAME=$(echo $FTP_PATH | awk -F [/] '{print $7}')
-	       		        docker build --build-arg FILE_NAME=${FILE_NAME} --build-arg FTP_PATH=${FTP_PATH} -f Dockerfile-tf-${python_version} -t yi/tflow-vnc:${tensorflow_version}-python-${python_version} .
+                        FILE_NAME=$(echo $FTP_PATH | awk -F [/] '{print $6}')
+	       		docker build --build-arg FILE_NAME=${FILE_NAME} --build-arg FTP_PATH=${FTP_PATH} -f Dockerfile-tf-${python_version} -t yi/tflow-vnc:${tensorflow_version}-python-${python_version} .
 		            ''' 
             }
         }
@@ -43,16 +42,16 @@ pipeline {
 		stage('Save & Load Docker Image') { 
             steps {
                 sh '''#!/bin/bash -xe
-		                echo 'Saving Docker image into tar archive'
+		        echo 'Saving Docker image into tar archive'
                         docker save yi/tflow-vnc:${tensorflow_version}-python-${python_version} | pv | cat > $WORKSPACE/yi-tflow-vnc-${tensorflow_version}-python-${python_version}.tar
-                        
-						echo 'Remove Original Docker Image' 
-						CURRENT_ID=$(docker images | grep -E '^yi/tflow-vnc.*'${tensorflow_version}-python-${python_version}'' | awk -e '{print $3}')
-						docker rmi -f yi/tflow-vnc:${tensorflow_version}-python-${python_version}
-                        
+			
+                        echo 'Remove Original Docker Image' 
+			CURRENT_ID=$(docker images | grep -E '^yi/tflow-vnc.*'${tensorflow_version}-python-${python_version}'' | awk -e '{print $3}')
+			docker rmi -f yi/tflow-vnc:${tensorflow_version}-python-${python_version}
+			
                         echo 'Loading Docker Image'
                         pv $WORKSPACE/yi-tflow-vnc-${tensorflow_version}-python-${python_version}.tar | docker load
-						docker tag $CURRENT_ID yi/tflow-vnc:${tensorflow_version}-python-${python_version} 
+			docker tag $CURRENT_ID yi/tflow-vnc:${tensorflow_version}-python-${python_version} 
                         
                         echo 'Removing temp archive.'  
                         rm $WORKSPACE/yi-tflow-vnc-${tensorflow_version}-python-${python_version}.tar
