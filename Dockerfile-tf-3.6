@@ -93,7 +93,7 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.20.ta
     rm -rf /var/lib/apt/lists/*
     
     ENV HDF5_DIR=/usr/local 
-    RUN python -m pip --no-cache-dir install --no-binary=h5py h5py
+    RUN python3.6 -m pip --no-cache-dir install --no-binary=h5py h5py
 	
 	
 ###################################
