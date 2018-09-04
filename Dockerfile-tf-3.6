@@ -30,16 +30,15 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
 ##################################################################
 
 RUN apt-get update && apt-get install -y --no-install-recommends \ 		 
-         libfreetype6-dev \
-         libpng12-dev \ 
-         libzmq3-dev \
-         libcurl3-dev \
-         libgoogle-perftools-dev \		 
-         pkg-config \  
-         python3-tk \
-         && \ 
-     apt-get clean && \ 
-     rm -rf /var/lib/apt/lists/*  
+    libfreetype6-dev \
+    libpng12-dev \ 
+    libzmq3-dev \
+    libcurl3-dev \
+    libgoogle-perftools-dev \		 
+    pkg-config \  
+    python3-tk && \    
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*  
  
  
 RUN python3.6 -m pip --no-cache-dir install \ 
