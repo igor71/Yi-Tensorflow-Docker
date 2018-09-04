@@ -7,8 +7,8 @@ pipeline {
                    if test ! -z "$(docker images -q yi/tflow-gui:latest)"; then
                       echo "Docker Image Already Exist!!!"
                    else
-                      pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-devel-ubuntu16.04/yi-tflow-gui-latest.tar | docker load
-                      docker tag 0c46c3027c89 yi/tflow-gui:latest
+                      pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-latest.tar | docker load
+                      docker tag c7de8462df06 yi/tflow-gui:latest
                       echo "DONE!!!"
                    fi
 		            ''' 
