@@ -4,7 +4,7 @@ pipeline {
         stage('Import yi/tflow-gui Docker Image') {
             steps {
                 sh '''#!/bin/bash -xe
-                   if test ! -z "$(docker images -q e9395c7651ae)"; then
+                   if [[ "$(docker images -q e9395c7651ae 2> /dev/null)" == "" ]]; then
                       echo "Docker Image Already Exist!!!"
                    else
 		      echo "Removing Docker Image"
