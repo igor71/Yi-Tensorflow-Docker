@@ -4,11 +4,13 @@ pipeline {
         stage('Import yi/tflow-gui Docker Image') {
             steps {
                 sh '''#!/bin/bash -xe
-                   if test ! -z "$(docker images -q yi/tflow-gui:latest)"; then
+                   if test ! -z "$(docker images -q e9395c7651ae)"; then
                       echo "Docker Image Already Exist!!!"
                    else
+		      echo "Removing Docker Image"
+		      docker rmi -f yi/tflow-gui:latest
                       pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-latest.tar | docker load
-                      docker tag c7de8462df06 yi/tflow-gui:latest
+                      docker tag e9395c7651ae yi/tflow-gui:latest
                       echo "DONE!!!"
                    fi
 		            ''' 
