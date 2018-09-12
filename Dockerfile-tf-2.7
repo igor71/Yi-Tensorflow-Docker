@@ -66,17 +66,6 @@ RUN pip --no-cache-dir install \
     && \
     python -m ipykernel.kernelspec 
 	
-###################################
-# Install TensorFlow GPU version. #
-###################################
-
-RUN cd /
-ARG FTP_PATH
-ARG FILE_NAME
-RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
-    pip --no-cache-dir install --upgrade ${FILE_NAME} && \
-    rm -f ${FILE_NAME}
-    
     
 #################################################
 #     Install HDF5 with multithread support     #
@@ -95,6 +84,18 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.20.ta
     
     ENV HDF5_DIR=/usr/local 
     RUN pip --no-cache-dir install --no-binary=h5py h5py
+    
+    
+###################################
+# Install TensorFlow GPU version. #
+###################################
+
+RUN cd /
+ARG FTP_PATH
+ARG FILE_NAME
+RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
+    pip --no-cache-dir install --upgrade ${FILE_NAME} && \
+    rm -f ${FILE_NAME}
     
     
 ##################################################
