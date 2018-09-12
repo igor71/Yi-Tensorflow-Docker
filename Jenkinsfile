@@ -4,15 +4,25 @@ pipeline {
         stage('Import yi/tflow-gui Docker Image') {
             steps {
                 sh '''#!/bin/bash -xe
-                   if [[ "$(docker images -q e9395c7651ae 2> /dev/null)" == "" ]]; then
-                      echo "Docker Image Already Exist!!!"
-                   else
-		      echo "Removing Docker Image"
-		      docker rmi -f yi/tflow-gui:latest
-                      pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-latest.tar | docker load
-                      docker tag e9395c7651ae yi/tflow-gui:latest
-                      echo "DONE!!!"
-                   fi
+                   # Bacic Docker Image For Tensorflow Versions 1.5 - 1.9
+                      image_id="$(docker images -q yi/tflow-gui:latest)"
+                      echo "Basic Docker Image For Current Branch Is: $image_id"
+                      # Bacic Docker Image For Tensorflow Version 1.10
+                      wrong_image_id=e9395c7651ae
+                      echo "Wrong Docker Image For Current Branch Is: $wrong_image_id"
+
+                      # Check If Docker Image Exist On Desired Server
+                      if [[ "$(docker images -q yi/tflow-gui:latest 2> /dev/null)" == "" ]]; then
+                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-devel-ubuntu16.04/yi-tflow-gui-latest.tar | docker load
+                         docker tag 0c46c3027c89 yi/tflow-gui:latest
+                      elif [ "$image_id" == "$wrong_image_id" ]; then
+                         echo "Wrong Docker Image!!! Removing..."
+                         docker rmi -f yi/tflow-gui:latest
+                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-devel-ubuntu16.04/yi-tflow-gui-latest.tar | docker load
+                         docker tag 0c46c3027c89 yi/tflow-gui:latest
+                      else
+                         echo "Docker Image Already Exist"
+                      fi
 		            ''' 
             }
         }
