@@ -62,7 +62,7 @@ pipeline {
 			docker rmi -f yi/tflow-vnc:${tensorflow_version}-python-${python_version}
 			
                         echo 'Loading Docker Image'
-                        pv $WORKSPACE/yi-tflow-vnc-${tensorflow_version}-python-${python_version}.tar | docker load
+                        pv -f $WORKSPACE/yi-tflow-vnc-${tensorflow_version}-python-${python_version}.tar | docker load
 			docker tag $CURRENT_ID yi/tflow-vnc:${tensorflow_version}-python-${python_version} 
                         
                         echo 'Removing temp archive.'  
