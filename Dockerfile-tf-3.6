@@ -20,7 +20,7 @@ RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3 && \
     ln -s /usr/local/bin/pip /usr/local/bin/pip3 && \
     ln -s /usr/bin/python3.6 /usr/local/bin/python
     
-RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
+RUN curl -fSsL -O ftp://jenkins-cloud/pub/Develop/get-pip.py && \
     python3.6 get-pip.py && \
     rm get-pip.py 
    
