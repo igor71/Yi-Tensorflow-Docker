@@ -4,7 +4,7 @@ pipeline {
         stage('Import yi/tflow-gui Docker Image') {
             steps {
                 sh '''#!/bin/bash -xe
-                   # Bacic Docker Image For Tensorflow Version 1.10
+                   # Bacic Docker Image For Tensorflow Version 1.11
                       image_id="$(docker images -q yi/tflow-gui:latest)"
                       echo "Basic Docker Image For Current Branch Is: $image_id"
                       # Bacic Docker Image For Tensorflow Versions 1.5 - 1.9
