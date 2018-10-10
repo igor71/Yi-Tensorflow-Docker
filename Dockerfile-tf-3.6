@@ -23,8 +23,19 @@ RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3 && \
 RUN curl -fSsL -O ftp://jenkins-cloud/pub/Develop/get-pip.py && \
     python3.6 get-pip.py && \
     rm get-pip.py 
-   
-   
+
+##################################################################
+#                     Possible TensorRT Support                  #
+##################################################################
+
+RUN apt-get update && \
+    apt-get install nvinfer-runtime-trt-repo-ubuntu1604-4.0.1-ga-cuda9.0 && \
+    apt-get update && \
+    apt-get install libnvinfer4=4.1.2-1+cuda9.0 && \
+    apt-get install libnvinfer-dev=4.1.2-1+cuda9.0
+    # ENV TF_NEED_TENSORRT 1
+	
+	
 ################################################################## 
 #              Pick up some TF dependencies                      #
 ##################################################################
