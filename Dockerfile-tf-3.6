@@ -80,6 +80,8 @@ RUN python3.6 -m pip --no-cache-dir install \
     pymongo \
     sacred \
     tables \
+    keras-applications==1.0.6
+    keras-preprocessing==1.0.5
     urllib3==1.21.1 && \
     python3.6 -m ipykernel.kernelspec && \
     apt-get clean && \ 
