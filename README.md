@@ -52,5 +52,6 @@ Build yi/tflow-vnc:X.X.X Image
      python3 -c 'import tensorflow as tf; print(tf.__version__)' -->> python 3.6
      
      python -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
+     python3 -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
      ```
  
