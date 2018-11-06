@@ -65,6 +65,15 @@ RUN pip --no-cache-dir install \
     tables \
     && \
     python -m ipykernel.kernelspec 
+    
+    
+################################################################## 
+#              Installing XIAOYI Packages                        #
+##################################################################
+
+RUN python3.6 -m pip --no-cache-dir install --index-url http://192.168.1.102:8888 xiaoyi --trusted-host 192.168.1.102 --upgrade &&\
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
 	
     
 #################################################
@@ -84,6 +93,30 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.20.ta
     
     ENV HDF5_DIR=/usr/local 
     RUN pip --no-cache-dir install --no-binary=h5py h5py
+    
+    
+#################################################
+#        Compale & Install Cmake Package        #
+#################################################
+
+RUN apt-get update && apt-get install -y --no-install-recommends \ 
+    openssl \
+    libssl-dev
+ 
+ARG version=3.12 
+ARG build=3 
+RUN cd /usr/local/src && \
+    wget https://cmake.org/files/v$version/cmake-$version.$build.tar.gz && \
+    tar -xzvf cmake-$version.$build.tar.gz && \
+    cd cmake-$version.$build && \
+    sed -i 's/cmake_options="-DCMAKE_BOOTSTRAP=1"/cmake_options="-DCMAKE_BOOTSTRAP=1 -DCMAKE_USE_OPENSSL=ON"/' bootstrap && \
+    ./bootstrap && \
+    make -j8 && \
+    make install && \
+    cmake --version && \
+    rm cmake-$version.$build.tar.gz && \
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
     
     
 ###################################
