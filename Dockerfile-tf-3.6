@@ -107,7 +107,7 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.20.ta
 #        Compale & Install Cmake Package        #
 #################################################
 
-RUN apt-get install -y --no-install-recommends \ 
+RUN apt-get update && apt-get install -y --no-install-recommends \
     openssl \
     libssl-dev
  
@@ -121,7 +121,7 @@ RUN cd /usr/local/src && \
     ./bootstrap && \
     make -j8 && \
     make install && \
-    cmake --version \
+    cmake --version && \
     rm cmake-$version.$build.tar.gz && \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
