@@ -122,7 +122,7 @@ RUN cd /usr/local/src && \
     make -j8 && \
     make install && \
     cmake --version && \
-    rm cmake-$version.$build.tar.gz && \
+    rm /usr/local/src/cmake-$version.$build.tar.gz && \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
 	
