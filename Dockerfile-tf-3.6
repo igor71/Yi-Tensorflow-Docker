@@ -93,7 +93,7 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.20.ta
     cd hdf5-1.8.20 && \
     ./configure --enable-threadsafe  --enable-unsupported --prefix /usr/local && \
     nc=`nproc` && \
-    make -$nc && \
+    make -j$nc && \
     make install && \
     cd .. && \
     rm hdf5-1.8.20.tar && rm -rf hdf5-1.8.20.tar && \
@@ -121,7 +121,7 @@ RUN cd /usr/local/src && \
     sed -i 's/cmake_options="-DCMAKE_BOOTSTRAP=1"/cmake_options="-DCMAKE_BOOTSTRAP=1 -DCMAKE_USE_OPENSSL=ON"/' bootstrap && \
     ./bootstrap && \
     nc=`nproc` && \
-    make -$nc && \
+    make -j$nc && \
     make install && \
     cmake --version && \
     rm /usr/local/src/cmake-$version.$build.tar.gz && \
