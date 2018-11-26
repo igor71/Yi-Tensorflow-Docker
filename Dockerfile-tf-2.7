@@ -100,7 +100,8 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.20.ta
     tar -xvf hdf5-1.8.20.tar && \
     cd hdf5-1.8.20 && \
     ./configure --enable-threadsafe  --enable-unsupported --prefix /usr/local && \
-    make && \
+    nc=`nproc` && \
+    make -j$nc && \
     make install && \
     cd .. && \
     rm hdf5-1.8.20.tar && rm -rf hdf5-1.8.20.tar && \
