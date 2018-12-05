@@ -4,22 +4,22 @@ pipeline {
         stage('Import yi/tflow-gui Docker Image') {
             steps {
                 sh '''#!/bin/bash -xe
-                   # Bacic Docker Image For Tensorflow Version 1.11
-                      image_id="$(docker images -q yi/tflow-gui:latest)"
+                   # Bacic Docker Image For Tensorflow Version 1.12
+                      image_id="$(docker images -q yi/tflow-gui:1.12)"
                       echo "Basic Docker Image For Current Branch Is: $image_id"
                       # Bacic Docker Image For Tensorflow Versions 1.5 - 1.9
                       wrong_image_id=0c46c3027c89
                       echo "Wrong Docker Image For Current Branch Is: $wrong_image_id"
 
                       # Check If Docker Image Exist On Desired Server
-                      if [[ "$(docker images -q yi/tflow-gui:latest 2> /dev/null)" == "" ]]; then
-                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-latest.tar | docker load
-                         docker tag e9395c7651ae yi/tflow-gui:latest
+                      if [[ "$(docker images -q yi/tflow-gui:1.12 2> /dev/null)" == "" ]]; then
+                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-1.12.tar | docker load
+                         docker tag ff2f83cb09c2 yi/tflow-gui:1.12
                       elif [ "$image_id" == "$wrong_image_id" ]; then
                          echo "Wrong Docker Image!!! Removing..."
                          docker rmi -f yi/tflow-gui:latest
-                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-latest.tar | docker load
-                         docker tag e9395c7651ae yi/tflow-gui:latest
+                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-1.12.tar | docker load
+                         docker tag ff2f83cb09c2 yi/tflow-gui:latest
                       else
                          echo "Docker Image Already Exist"
                       fi
