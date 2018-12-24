@@ -134,12 +134,12 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.20.ta
       apt-get clean && \ 
       rm -rf /var/lib/apt/lists/*	  
 	  
-  ARG PYTORCH_DEB=http://download.pytorch.org/whl/cu90/torch-0.4.1-cp36-cp36m-linux_x86_64.whl
+  ARG PYTORCH_DEB=http://download.pytorch.org/whl/cu90/torch-1.0.0-cp36-cp36m-linux_x86_64.whl
   RUN curl -OSL ${PYTORCH_DEB} && \
       python3.6 -m pip --no-cache-dir install \
-      torch-0.4.1-cp36-cp36m-linux_x86_64.whl \
+      torch-1.0.0-cp36-cp36m-linux_x86_64.whl \
       torchvision && \
-      rm -f torch-0.4.1-cp36-cp36m-linux_x86_64.whl && \
+      rm -f torch-1.0.0-cp36-cp36m-linux_x86_64.whl && \
       apt-get clean && \ 
       rm -rf /var/lib/apt/lists/*
  
