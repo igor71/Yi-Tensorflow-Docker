@@ -38,7 +38,7 @@ Build yi/tflow-vnc:X.X.X Image
   3. Once build completed, run the docker as foolwing:
   
      ```
-     yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-3.6    -->> based on python 3.6.3
+     yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-3.6    -->> based on python 3.6.8
      yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-2.7    -->> based on python 2.7.12
      ```
      where x.x.x is tensorflow version, e.g. 1.8.0 or 1.4.1... etc
