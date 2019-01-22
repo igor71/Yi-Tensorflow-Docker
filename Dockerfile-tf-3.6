@@ -155,7 +155,7 @@ RUN python -m pip --no-cache-dir install \
     keras-preprocessing \
     glances \
     urllib3==1.21.1 && \
-    python3.6 -m ipykernel.kernelspec && \
+    python -m ipykernel.kernelspec && \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
