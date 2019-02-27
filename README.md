@@ -8,7 +8,7 @@ Build yi/tflow-vnc:X.X.X Image
    contain Pycharm version 18.3.4 & SmartGit 18.2.6 (27.02.2016)
    
    Image ID is: 7de805ae752a
-2. This branc conatin python 3.6.8 build from the sources and optimized for running on target server
+2. This branch conatin python 3.6.8 build from the sources and optimized for running on target server
 3. This branch can be used with tensorflow 1.9 and above
 
 ### HOW-To
