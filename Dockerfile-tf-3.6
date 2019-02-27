@@ -4,7 +4,7 @@ MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
 
 #################################################
-#     Python 3.6 installations for dev          #
+#     Python 3.6.8 installations for dev          #
 #################################################
 
 ENV PYTHON_VERSION=3.6.8
@@ -94,18 +94,6 @@ RUN set -ex; \
 		\) -exec rm -rf '{}' +; \
 	rm -f get-pip.py
 
-
-##################################################################
-#                     Possible TensorRT Support                  #
-##################################################################
-
-RUN apt-get update && \
-    apt-get install nvinfer-runtime-trt-repo-ubuntu1604-4.0.1-ga-cuda9.0 && \
-    apt-get update && \
-    apt-get install libnvinfer4=4.1.2-1+cuda9.0 && \
-    apt-get install libnvinfer-dev=4.1.2-1+cuda9.0
-    # ENV TF_NEED_TENSORRT 1
-	
 	
 ################################################################## 
 #              Pick up some TF dependencies                      #
@@ -159,6 +147,15 @@ RUN python -m pip --no-cache-dir install \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
+    
+################################################################## 
+#              Installing XIAOYI Packages                        #
+##################################################################
+
+RUN python3.6 -m pip --no-cache-dir install --index-url http://192.168.1.102:8888 xiaoyi --trusted-host 192.168.1.102 --upgrade &&\
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
+    
 
 #################################################
 #     Install HDF5 with multithread support     #
@@ -177,6 +174,31 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.20.ta
     
     ENV HDF5_DIR=/usr/local 
     RUN python3.6 -m pip --no-cache-dir install --no-binary=h5py h5py
+    
+    
+#################################################
+#        Compale & Install Cmake Package        #
+#################################################
+
+RUN apt-get update && apt-get install -y --no-install-recommends \ 
+    openssl \
+    libssl-dev
+ 
+ARG version=3.12 
+ARG build=3 
+RUN cd /usr/local/src && \
+    wget https://cmake.org/files/v$version/cmake-$version.$build.tar.gz && \
+    tar -xzvf cmake-$version.$build.tar.gz && \
+    cd cmake-$version.$build && \
+    sed -i 's/cmake_options="-DCMAKE_BOOTSTRAP=1"/cmake_options="-DCMAKE_BOOTSTRAP=1 -DCMAKE_USE_OPENSSL=ON"/' bootstrap && \
+    ./bootstrap && \
+    nc=`nproc` && \
+    make -j$nc && \
+    make install && \
+    cmake --version && \
+    rm /usr/local/src/cmake-$version.$build.tar.gz && \
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
     
    
 ###################################
@@ -198,7 +220,7 @@ RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
 ENV CI_BUILD_PYTHON python
 ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
 ENV TF_NEED_CUDA 1
-ENV TF_CUDA_COMPUTE_CAPABILITIES=7.0
+ENV TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1
 ENV TF_CUDA_VERSION=9.0
 ENV TF_CUDNN_VERSION=7
 ENV TF_NCCL_VERSION=2.2
