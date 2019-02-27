@@ -4,8 +4,8 @@ Build yi/tflow-vnc:X.X.X Image
 
 ### Notes:
 
-1. Basic inage used for this build is yi/tflow-gui:1.12
-   it contain Pycharm version 18.3.4 & SmartGit 18.2.6 (27.02.2016)
+1. Basic inage used for this build is yi/tflow-gui:1.12, 
+   contain Pycharm version 18.3.4 & SmartGit 18.2.6 (27.02.2016)
    
    Image ID is: 7de805ae752a
 2. This branc conatin python 3.6.8 build from the sources and optimized for running on target server
