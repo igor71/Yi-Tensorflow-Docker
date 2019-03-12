@@ -13,13 +13,13 @@ pipeline {
 
                       # Check If Docker Image Exist On Desired Server
                       if [[ "$(docker images -q yi/tflow-gui:1.12 2> /dev/null)" == "" ]]; then
-                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-1.12.tar | docker load
-                         docker tag ff2f83cb09c2 yi/tflow-gui:1.12
+                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-1.12-new/yi-tflow-gui-1.12.tar | docker load
+                         docker tag bdccc25c5e3d yi/tflow-gui:1.12
                       elif [ "$image_id" == "$wrong_image_id" ]; then
                          echo "Wrong Docker Image!!! Removing..."
                          docker rmi -f yi/tflow-gui:latest
-                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-1.12.tar | docker load
-                         docker tag ff2f83cb09c2 yi/tflow-gui:latest
+                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-1.12.tar/yi-tflow-gui-1.12.tar | docker load
+                         docker tag bdccc25c5e3d yi/tflow-gui:latest
                       else
                          echo "Docker Image Already Exist"
                       fi
