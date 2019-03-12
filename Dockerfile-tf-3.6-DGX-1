@@ -3,7 +3,7 @@ FROM yi/tflow-gui:1.12
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
 
-R#################################################
+#################################################
 #     Python 3.6 installations for dev          #
 #################################################
 
@@ -69,7 +69,32 @@ RUN set -ex \
 RUN cd /usr/local/bin \
 	&& ln -s pydoc3 pydoc \
 	&& ln -s python3 python \
+	&& ln -s /usr/local/bin/python3.6 /usr/bin/python3.6 \
 	&& ln -s python3-config python-config
+	
+##################################	
+# Installing PIP and Dependences #
+##################################	
+
+RUN set -ex; \
+	\
+	wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py'; \
+	\
+	python get-pip.py \
+		--disable-pip-version-check \
+		--no-cache-dir \
+		"pip==$PYTHON_PIP_VERSION" \
+	; \
+	pip --version; \
+	\
+	find /usr/local -depth \
+		\( \
+			\( -type d -a \( -name test -o -name tests \) \) \
+			-o \
+			\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
+		\) -exec rm -rf '{}' +; \
+	rm -f get-pip.py
+
 
 ##################################################################
 #                     Possible TensorRT Support                  #
@@ -130,6 +155,7 @@ RUN python -m pip --no-cache-dir install \
     keras-applications \
     keras-preprocessing \
     glances \
+    texttable \
     urllib3==1.21.1 && \
     python -m ipykernel.kernelspec && \
     apt-get clean && \ 
