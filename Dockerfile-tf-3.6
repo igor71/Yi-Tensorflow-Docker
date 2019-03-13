@@ -88,6 +88,15 @@ RUN python3.6 -m pip --no-cache-dir install \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
+    
+################################################################## 
+#              Installing XIAOYI Packages                        #
+##################################################################
+
+RUN python3.6 -m pip --no-cache-dir install --index-url http://192.168.1.102:8888 xiaoyi --trusted-host 192.168.1.102 --upgrade &&\
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
+    
 
 #################################################
 #     Install HDF5 with multithread support     #
