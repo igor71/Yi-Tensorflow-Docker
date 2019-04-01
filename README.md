@@ -45,13 +45,8 @@ Build yi/tflow-vnc:X.X.X Image
   
   4. Checking installed tensorflow (and his components) version:
      ```
-     python -c 'import h5py; print(h5py.version.info)'  -->> python 2.7
-     python3 -c 'import h5py; print(h5py.version.info)' -->> python 3.6
-  
-     python -c 'import tensorflow as tf; print(tf.__version__)' -->> python 2.7
-     python3 -c 'import tensorflow as tf; print(tf.__version__)' -->> python 3.6
-     
-     python -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
-     python3 -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
+     python -c 'import h5py; print(h5py.version.info)'  -->> python 3.6.8
+   
+     python -c "import tensorflow as tf; print(tf.__version__)"
      ```
  
