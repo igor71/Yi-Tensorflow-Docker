@@ -6,15 +6,16 @@ pipeline {
                 sh '''#!/bin/bash -xe
                    # Bacic Docker Image For Tensorflow Version 2.0
                       image_id="$(docker images -q yi/tflow-gui:latest)"
-                      echo "Basic Docker Image For Current Branch Is: $image_id"
+                      echo "Available Basic Docker Image Is: $image_id"
                     
-                   # Check If Docker Image Exist On Desired Server
-                      if [[ "$(docker images -q yi/tflow-gui:latest> /dev/null)" == "" ]]; then
-                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
-                         docker tag 16fd4c7d7228 yi/tflow-gui:latest
-                      elif [ "$image_id" != "16fd4c7d7228" ]; then
-                         echo "Wrong Docker Image!!! Removing..."
+                   # Check If Docker Image Exist On Desired Server 
+		      if [ "$image_id" != "16fd4c7d7228" ]; then
+		         echo "Wrong Docker Image!!! Removing..."
                          docker rmi -f yi/tflow-gui:latest
+			 pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
+                         docker tag 16fd4c7d7228 yi/tflow-gui:latest
+                      elif [ "$image_id" != "" ]; then
+                         echo "Docker Image Dosen't Exist!!!"
                          pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
                          docker tag 16fd4c7d7228 yi/tflow-gui:latest
                       else
