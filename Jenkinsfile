@@ -5,21 +5,18 @@ pipeline {
             steps {
                 sh '''#!/bin/bash -xe
                    # Bacic Docker Image For Tensorflow Version 1.12
-                      image_id="$(docker images -q yi/tflow-gui:1.12)"
+                      image_id="$(docker images -q yi/tflow-gui:latest)"
                       echo "Basic Docker Image For Current Branch Is: $image_id"
-                      # Bacic Docker Image For Tensorflow Versions 1.5 - 1.9
-                      wrong_image_id=0c46c3027c89
-                      echo "Wrong Docker Image For Current Branch Is: $wrong_image_id"
-
-                      # Check If Docker Image Exist On Desired Server
-                      if [[ "$(docker images -q yi/tflow-gui:1.12 2> /dev/null)" == "" ]]; then
-                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-1.12-new/yi-tflow-gui-1.12.tar | docker load
-                         docker tag bdccc25c5e3d yi/tflow-gui:1.12
-                      elif [ "$image_id" == "$wrong_image_id" ]; then
+                    
+                   # Check If Docker Image Exist On Desired Server
+                      if [[ "$(docker images -q yi/tflow-gui:latest> /dev/null)" == "" ]]; then
+                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
+                         docker tag 16fd4c7d7228 yi/tflow-gui:latest
+                      elif [ "$image_id" !== "16fd4c7d7228" ]; then
                          echo "Wrong Docker Image!!! Removing..."
                          docker rmi -f yi/tflow-gui:latest
-                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-1.12.tar/yi-tflow-gui-1.12.tar | docker load
-                         docker tag bdccc25c5e3d yi/tflow-gui:latest
+                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
+                         docker tag 16fd4c7d7228 yi/tflow-gui:latest
                       else
                          echo "Docker Image Already Exist"
                       fi
