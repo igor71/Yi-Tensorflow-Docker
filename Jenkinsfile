@@ -4,7 +4,7 @@ pipeline {
         stage('Import yi/tflow-gui Docker Image') {
             steps {
                 sh '''#!/bin/bash -xe
-                   # Bacic Docker Image For Tensorflow Version 1.12
+                   # Bacic Docker Image For Tensorflow Version 2.0
                       image_id="$(docker images -q yi/tflow-gui:latest)"
                       echo "Basic Docker Image For Current Branch Is: $image_id"
                     
@@ -12,7 +12,7 @@ pipeline {
                       if [[ "$(docker images -q yi/tflow-gui:latest> /dev/null)" == "" ]]; then
                          pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
                          docker tag 16fd4c7d7228 yi/tflow-gui:latest
-                      elif [ "$image_id" !== "16fd4c7d7228" ]; then
+                      elif [ "$image_id" != "16fd4c7d7228" ]; then
                          echo "Wrong Docker Image!!! Removing..."
                          docker rmi -f yi/tflow-gui:latest
                          pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
