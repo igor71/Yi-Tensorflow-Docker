@@ -12,8 +12,10 @@ pipeline {
 		      if [ "$image_id" != "b3c2236ff563" ]; then
 		         echo "Wrong Docker Image!!! Removing..."
                          docker rmi -f yi/tflow-gui:latest
-                      elif [ "$image_id" != "" ]; then
-                         echo "Docker Image Dosen't Exist!!!"
+			 pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
+                         docker tag b3c2236ff563 yi/tflow-gui:latest
+                      elif [ "$image_id" == "" ]; then
+                         echo "Docker Image Does Not Exist!!!"
                          pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
                          docker tag b3c2236ff563 yi/tflow-gui:latest
                       else
