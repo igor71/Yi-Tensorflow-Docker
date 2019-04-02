@@ -9,15 +9,15 @@ pipeline {
                       echo "Available Basic Docker Image Is: $image_id"
                     
                    # Check If Docker Image Exist On Desired Server 
-		      if [ "$image_id" != "16fd4c7d7228" ]; then
+		      if [ "$image_id" != "b3c2236ff563" ]; then
 		         echo "Wrong Docker Image!!! Removing..."
                          docker rmi -f yi/tflow-gui:latest
 			 pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
-                         docker tag 16fd4c7d7228 yi/tflow-gui:latest
+                         docker tag b3c2236ff563 yi/tflow-gui:latest
                       elif [ "$image_id" != "" ]; then
                          echo "Docker Image Dosen't Exist!!!"
                          pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
-                         docker tag 16fd4c7d7228 yi/tflow-gui:latest
+                         docker tag b3c2236ff563 yi/tflow-gui:latest
                       else
                          echo "Docker Image Already Exist"
                       fi
