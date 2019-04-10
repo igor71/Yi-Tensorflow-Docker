@@ -71,6 +71,7 @@ RUN cd /usr/local/bin \
         && ln -s idle3 idle \
 	&& ln -s pydoc3 pydoc \
 	&& ln -s python3 python \
+	&& ln -s /usr/local/bin/python3.6 /usr/bin/python3.6.8
 	&& ln -s python3-config python-config
 	
 ##################################	
@@ -94,10 +95,8 @@ RUN set -ex; \
 			-o \
 			\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
 		\) -exec rm -rf '{}' +; \
-	rm -f get-pip.py \
-	&& cp /usr/bin/python3.6 /usr/bin/python3.6-origin \
-	&& rm -f /usr/bin/python3.6 \
-	&& ln -s /usr/local/bin/python3.6 /usr/bin/python3.6 
+	rm -f get-pip.py 
+	
 	
 
 ##################################################################
