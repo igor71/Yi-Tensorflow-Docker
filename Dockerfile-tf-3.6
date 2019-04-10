@@ -71,6 +71,9 @@ RUN cd /usr/local/bin \
         && ln -s idle3 idle \
 	&& ln -s pydoc3 pydoc \
 	&& ln -s python3 python \
+	&& cp /usr/bin/python3.6 /usr/bin/python3.6-origin \
+	&& rm -f /usr/bin/python3.6 \
+	&& ln -s /usr/local/bin/python3.6 /usr/bin/python3.6 \
 	&& ln -s python3-config python-config
 	
 ##################################	
