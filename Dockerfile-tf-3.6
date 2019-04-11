@@ -171,7 +171,10 @@ RUN python -m pip --no-cache-dir install \
 #              Installing XIAOYI Packages                        #
 ##################################################################
 
-RUN python3.6 -m pip --no-cache-dir install --index-url http://192.168.1.102:8888 xiaoyi --trusted-host 192.168.1.102 --upgrade &&\
+ARG INSTALL_DIR=/root/.pip
+RUN if [ ! -d "$INSTALL_DIR" ]; then mkdir -p $INSTALL_DIR; fi
+COPY pip.conf $INSTALL_DIR
+RUN pip install xiaoyi --upgrade &&\
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
