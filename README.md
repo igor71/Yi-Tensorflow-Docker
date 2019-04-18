@@ -2,6 +2,18 @@
 
 Build yi/tflow-vnc:X.X.X Image
 
+```
+Ubuntu Version  -->> Ubuntu 18.04.2 LTS
+
+docker inspect -f '{{index .Config.Labels "com.nvidia.cuda.version"}}' e488e37d832f
+
+CUDA Version   -->> 10.1.130
+
+docker inspect -f '{{index .Config.Labels "com.nvidia.cudnn.version"}}' e488e37d832f
+
+CUDNN Version  -->> 7.5.0.56
+```
+
 ### HOW-To
 1. Check if desired version of tensorflow is available for target server
    ```
