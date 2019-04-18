@@ -5,11 +5,11 @@ Build yi/tflow-vnc:X.X.X Image
 ```
 Ubuntu Version  -->> Ubuntu 18.04.2 LTS
 
-docker inspect -f '{{index .Config.Labels "com.nvidia.cuda.version"}}' e488e37d832f
+docker inspect -f '{{index .Config.Labels "com.nvidia.cuda.version"}}' 0a1b1a956cdb
 
 CUDA Version   -->> 10.1.130
 
-docker inspect -f '{{index .Config.Labels "com.nvidia.cudnn.version"}}' e488e37d832f
+docker inspect -f '{{index .Config.Labels "com.nvidia.cudnn.version"}}' 0a1b1a956cdb
 
 CUDNN Version  -->> 7.5.0.56
 ```
