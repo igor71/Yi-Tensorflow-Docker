@@ -7,7 +7,7 @@ Ubuntu Version  -->> Ubuntu 16.04.6 LTS
 
 docker inspect -f '{{index .Config.Labels "com.nvidia.cuda.version"}}' eaf424ee8e35
 
-CUDA Version   -->> 10.1.130
+CUDA Version   -->> 10.0.130
 
 docker inspect -f '{{index .Config.Labels "com.nvidia.cudnn.version"}}' eaf424ee8e35
 
