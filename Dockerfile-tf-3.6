@@ -224,7 +224,12 @@ RUN mkdir /tmp/openmpi && \
 #  Install Horovod, temporarily using CUDA stubs #
 ##################################################
 
-RUN ldconfig /usr/local/cuda-9.0/targets/x86_64-linux/lib/stubs && \ 
+ENV PYTORCH_VERSION=1.1.0 
+ENV TORCHVISION_VERSION=0.2.2.post3 
+ENV MXNET_VERSION=1.4.1
+
+RUN pip install torch==${PYTORCH_VERSION} torchvision==${TORCHVISION_VERSION} mxnet-cu90==${MXNET_VERSION} && \
+    ldconfig /usr/local/cuda-9.0/targets/x86_64-linux/lib/stubs && \ 
     HOROVOD_GPU_ALLREDUCE=NCCL HOROVOD_WITH_TENSORFLOW=1 HOROVOD_WITH_PYTORCH=0 HOROVOD_WITH_MXNET=1 pip install --no-cache-dir horovod && \ 
     ldconfig 
 
