@@ -202,9 +202,33 @@ ARG FTP_PATH
 ARG FILE_NAME
 RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
     pip --no-cache-dir install --upgrade ${FILE_NAME} && \
-    rm -f ${FILE_NAME}  
+    rm -f ${FILE_NAME}
+    
+ ################################## 
+ #        Install Open MPI        #
+ ##################################
+ 
+RUN mkdir /tmp/openmpi && \ 
+    cd /tmp/openmpi && \ 
+    wget https://www.open-mpi.org/software/ompi/v4.0/downloads/openmpi-4.0.0.tar.gz && \ 
+    tar zxf openmpi-4.0.0.tar.gz && \ 
+    cd openmpi-4.0.0 && \ 
+    ./configure --enable-orterun-prefix-by-default && \ 
+    make -j $(nproc) all && \ 
+    make install && \ 
+    ldconfig && \ 
+    rm -rf /tmp/openmpi 
 
-  
+
+##################################################
+#  Install Horovod, temporarily using CUDA stubs #
+##################################################
+
+RUN ldconfig /usr/local/cuda-9.0/targets/x86_64-linux/lib/stubs && \ 
+    HOROVOD_GPU_ALLREDUCE=NCCL HOROVOD_WITH_TENSORFLOW=1 HOROVOD_WITH_PYTORCH=1 HOROVOD_WITH_MXNET=1 pip install --no-cache-dir horovod && \ 
+    ldconfig 
+
+
 ##################################################
 # Configure the build for our CUDA configuration #
 ##################################################
