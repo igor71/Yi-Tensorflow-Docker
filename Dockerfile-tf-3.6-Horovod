@@ -97,16 +97,11 @@ RUN cat /etc/ssh/ssh_config | grep -v StrictHostKeyChecking > /etc/ssh/ssh_confi
     mv /etc/ssh/ssh_config.new /etc/ssh/ssh_config
     
     
-# SSH login without password
+# Allow SSH login without password
 RUN cd /root && \
     curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/Horovod/ssh-horovod.tar && \
     pv -f ssh-horovod.tar | tar xpf - -C $PWD && \
-    chmod 700 .ssh && \
-    chmod 600 .ssh\authorized_keys && \
-    chmod 600 .ssh\id_rsa && \
-    chmod 644 .ssh\id_rsa.pub && \
-    chmod 644 .ssh\known_hosts && \
-    rm -f chmod 644 .ssh\id_rsa.pub && \
+    rm -f ssh-horovod.tar
     
 
 # Download examples
