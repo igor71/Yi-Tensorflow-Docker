@@ -9,7 +9,7 @@ pipeline {
                       echo "Basic Docker Image For Current Branch Is: $image_id"
                    
                       # Check If Docker Image Exist On Desired Server
-                      if [[ "$(docker images -q yi/tflow-gui:1.12 2> /dev/null)" == "" ]]; then
+                      if [[ "$(docker images -q nvidia/cuda:9.0-devel-ubuntu16.04 2> /dev/null)" == "" ]]; then
                          docker pull nvidia/cuda:9.0-devel-ubuntu16.04
                       else
                          echo "Docker Image Already Exist"
