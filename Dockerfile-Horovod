@@ -58,11 +58,12 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
 # Install TensorFlow GPU version. #
 ###################################
 
-ARG FTP_PATH=ftp://jenkins-cloud/pub/Tensorflow-1.13.1-9.0-cudnn7-devel-ubuntu16.04-Server_19.20/tensorflow-1.13.1-cp36-cp36m-linux_x86_64.whl
-ARG FILE_NAME=tensorflow-1.13.1-cp36-cp36m-linux_x86_64.whl
+RUN cd /
+ARG FTP_PATH
+ARG FILE_NAME
 RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
     pip --no-cache-dir install --upgrade ${FILE_NAME} && \
-    rm -f ${FILE_NAME}  
+    rm -f ${FILE_NAME}
 
 # Install Tensorflow Dependences, Keras, PyTorch and MXNet
 RUN pip install numpy keras h5py torch==${PYTORCH_VERSION} torchvision==${TORCHVISION_VERSION} mxnet-cu90==${MXNET_VERSION}
