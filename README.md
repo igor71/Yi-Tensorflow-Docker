@@ -38,20 +38,23 @@ Build yi/tflow-vnc:X.X.X Image
   3. Once build completed, run the docker as foolwing:
   
      ```
-     yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-3.6    -->> based on python 3.6.8
-     yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-2.7    -->> based on python 2.7.12
+     On Master Server -22:
+     nvidia-docker run --network=host --name=horovod -v /media:/media -it -d --privileged yi/tflow-vnc:1.13.1-python-3.6-horovod
+     On Slave Servers:
+     nvidia-docker run --network=host --name=horovod -v /media:/media -it -d --privileged yi/tflow-vnc:1.13.1-python-3.6-horovod bash -c "/usr/sbin/sshd -p 12345; sleep infinity"
+     On Master:
+     yi-dockeradmin horovod
+     horovodrun -np 12 -H server-22:8,server-19:4 -p 12345 python keras_mnist_advanced.py
      ```
-     where x.x.x is tensorflow version, e.g. 1.8.0 or 1.4.1... etc
   
   4. Checking installed tensorflow (and his components) version:
      ```
-     python -c 'import h5py; print(h5py.version.info)'  -->> python 2.7
-     python3 -c 'import h5py; print(h5py.version.info)' -->> python 3.6
+     python -c 'import h5py; print(h5py.version.info)' 
   
-     python -c 'import tensorflow as tf; print(tf.__version__)' -->> python 2.7
-     python3 -c 'import tensorflow as tf; print(tf.__version__)' -->> python 3.6
+     python -c 'import tensorflow as tf; print(tf.__version__)'
+   
      
      python -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
-     python3 -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
+     
      ```
  
