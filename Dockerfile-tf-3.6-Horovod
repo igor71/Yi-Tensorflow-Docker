@@ -45,11 +45,27 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
         vim \
         wget \
         ca-certificates \
+	libsm6 \
+	libxext6 \
+	libxrender-dev \
         libcudnn7=${CUDNN_VERSION} \
         libnccl2=${NCCL_VERSION} \
         libnccl-dev=${NCCL_VERSION} \
         libjpeg-dev \
         libpng-dev 
+	
+	
+############################################	
+# Installing build environment app #
+############################################
+	
+RUN python -m pip --no-cache-dir install \
+    opencv-python \
+    sklearn \
+    albumentations \
+    easydict \
+    texttable \
+    tflearn
 
 
 # Install TensorFlow, Keras, PyTorch and MXNet
@@ -66,7 +82,7 @@ RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
     rm -f ${FILE_NAME}
 
 # Install Tensorflow Dependences, Keras, PyTorch and MXNet
-RUN pip install numpy keras h5py torch==${PYTORCH_VERSION} torchvision==${TORCHVISION_VERSION} mxnet-cu90==${MXNET_VERSION}
+RUN pip install 'numpy<1.15.0'  keras h5py torch==${PYTORCH_VERSION} torchvision==${TORCHVISION_VERSION} mxnet-cu90==${MXNET_VERSION}
 
 # Install Open MPI
 RUN mkdir /tmp/openmpi && \
@@ -107,6 +123,9 @@ RUN cd /root && \
 # Download examples
 RUN apt-get install -y --no-install-recommends subversion && \
     svn checkout https://github.com/horovod/horovod/trunk/examples && \
-    rm -rf /examples/.svn
+    rm -rf /examples/.svn && \
+    apt-get -q clean -y && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -f /var/cache/apt/*.bin
 
 WORKDIR "/examples"
