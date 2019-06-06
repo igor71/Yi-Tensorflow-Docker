@@ -69,8 +69,8 @@ RUN python -m pip --no-cache-dir install \
     h5py
 
 
-# Install TensorFlow, Keras & PyTorch
-RUN pip install tensorflow-gpu==${TENSORFLOW_VERSION} torch==${PYTORCH_VERSION} torchvision==${TORCHVISION_VERSION}
+# Install TorchVision & PyTorch
+RUN pip install torch==${PYTORCH_VERSION} torchvision==${TORCHVISION_VERSION}
 
 # Install Open MPI
 RUN mkdir /tmp/openmpi && \
