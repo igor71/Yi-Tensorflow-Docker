@@ -30,6 +30,7 @@ pipeline {
                         SRV=$(echo ${target_server} | awk -F [-] '{print $2}')
                         curl -OSL ftp://jenkins-cloud/pub/map.csv -o map.csv
                         FTP_PATH=$(awk -F [,] -v srv="$SRV" '$6==srv' map.csv|  awk -F [,] -v cuda_version="$cuda_version" '$2==cuda_version'  |  awk -F [,] -v python_version="$python_version" '$5==python_version' | awk -F [,] -v tf_version="$tensorflow_version" '$7~tf_version' | awk -F, '{print $4}')
+			FILE_NAME=$(echo $FTP_PATH | awk -F [/] '{print $6}')
 	       		docker build --build-arg FILE_NAME=${FILE_NAME} --build-arg FTP_PATH=${FTP_PATH} -f Dockerfile-tf-${python_version} -t yi/tflow-vnc:${tensorflow_version}-python-${python_version} .
 		            ''' 
             }
