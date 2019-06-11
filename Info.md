@@ -21,6 +21,8 @@ and version of TensorFlow, MPI, CUDA, and NCCL as the server you built the wheel
 ```sdist``` provides source tarball that you can install on a target server with build flags and versions of dependencies available on the server
 that you're installing the tarball.
 
-### Advice: Use python setup.py sdist instead of bdist_wheel, because it gives this "late binding" benefits.
+### Advice: 
+
+Use python setup.py sdist instead of bdist_wheel, because it gives this "late binding" benefits.
 
 https://github.com/horovod/horovod/issues/155
