@@ -160,7 +160,7 @@ RUN apt-get install -y --no-install-recommends subversion && \
 # Add Welcome Message With Instructions #
 #########################################
 
-RUN printf '[ ! -z "$TERM" -a -r /etc/motd ] cat /etc/motd' \
+RUN printf '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
 	>> /etc/bash.bashrc \
 	; printf "\
 ||||||||||||||||||||||||||||||||||||\n\
