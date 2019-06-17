@@ -49,6 +49,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     cpio \
     sudo \
+    pv \
     python3-tk && \    
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*  
@@ -138,7 +139,7 @@ RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
 
 ARG VER=l_openvino_toolkit_p_2019.1.144.tgz
 RUN cd /tmp && \
-    curl -OSL tp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/${VER} -o ${VER} && \
+    curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/${VER} -o ${VER} && \
     pv -f ${VER} | tar xpzf - -C $PWD && \
     cd l_openvino_toolkit_p_2019.1.144 && \
     sed -i 's/decline/accept/g' silent.cfg && \
@@ -158,6 +159,18 @@ RUN cd /tmp && \
     sed -i '$ a __all__ = ["IENetwork", "IEPlugin"] #, "IENetReader"]' __init__.py && \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
+    
+    
+#######################################
+# Set User OPENVINO User To The image #
+#######################################
+
+RUN useradd -m -d /home/jenkins -s /bin/bash openvino && \
+    echo "openvino:openvino" | chpasswd && \
+
+# Add the jenkins user to sudoers
+    sed -i '23 a openvino  ALL=(ALL)  NOPASSWD: ALL' etc/sudoers
+
     
       
 ##################################################
