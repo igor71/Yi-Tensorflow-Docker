@@ -1,6 +1,8 @@
 # Yi-Tensorflow-Docker with OpenVINO
 
-Build yi/tflow-vnc:X.X.X Image
+Build yi/tflow-vnc:X.X.X Image wit OpenVINO
+
+Note, Current OpenVINO version (1.144) working only with Tensorflow ver. 1.12 only (CUDA 9.0 & CuDNN 7)
 
 ### HOW-To
 1. Check if desired version of tensorflow is available for target server
