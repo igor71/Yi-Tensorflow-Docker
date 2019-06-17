@@ -139,13 +139,13 @@ RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
 ARG VER=l_openvino_toolkit_p_2019.1.144.tgz
 RUN cd /tmp && \
     curl -OSL tp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/${VER} -o ${VER} && \
-    pv -f ${VER} | tar xpf - -C $PWD && \
+    pv -f ${VER} | tar xpzf - -C $PWD && \
     cd l_openvino_toolkit_p_2019.1.144 && \
     sed -i 's/decline/accept/g' silent.cfg && \
     ./install.sh -s silent.cfg --ignore-signature && \
     cd /opt/intel/openvino/install_dependencies && \
     ./install_openvino_dependencies.sh
-    source /opt/intel/openvino/bin/setupvars.sh && \
+    /bin/bash -c "source /opt/intel/openvino/bin/setupvars.sh" && \
     pv -f source /opt/intel/openvino/bin/setupvars.sh > /tmp/setupvars.sh && \
     chmod o+x /tmp/setupvars.sh && \
     ################### Instlling Tensorflow Support #########################
