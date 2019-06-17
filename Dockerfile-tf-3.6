@@ -145,7 +145,7 @@ RUN cd /tmp && \
     sed -i 's/decline/accept/g' silent.cfg && \
     ./install.sh -s silent.cfg --ignore-signature && \
     cd /opt/intel/openvino/install_dependencies && \
-    ./install_openvino_dependencies.sh
+    ./install_openvino_dependencies.sh && \
     /bin/bash -c "source /opt/intel/openvino/bin/setupvars.sh" && \
     pv -f source /opt/intel/openvino/bin/setupvars.sh > /tmp/setupvars.sh && \
     chmod o+x /tmp/setupvars.sh && \
