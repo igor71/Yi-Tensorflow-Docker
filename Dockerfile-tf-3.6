@@ -147,7 +147,7 @@ RUN cd /tmp && \
     cd /opt/intel/openvino/install_dependencies && \
     ./install_openvino_dependencies.sh && \
     /bin/bash -c "source /opt/intel/openvino/bin/setupvars.sh" && \
-    pv -f source /opt/intel/openvino/bin/setupvars.sh > /tmp/setupvars.sh && \
+    pv -f /opt/intel/openvino/bin/setupvars.sh > /tmp/setupvars.sh && \
     chmod o+x /tmp/setupvars.sh && \
     ################### Instlling Tensorflow Support #########################
     cd /opt/intel/openvino/deployment_tools/model_optimizer/install_prerequisites && \
