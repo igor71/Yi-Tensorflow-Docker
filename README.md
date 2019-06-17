@@ -40,7 +40,7 @@ Note, Current OpenVINO version (1.144) working only with Tensorflow ver. 1.12 on
   3. Once build completed, run the docker as foolwing:
   
      ```
-     yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-3.6 
+     yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-3.6-opencv
      ```
      where x.x.x is tensorflow version, e.g. 1.8.0 or 1.4.1... etc
   
