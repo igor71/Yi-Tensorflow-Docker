@@ -46,9 +46,9 @@ Note, Current OpenVINO version (1.144) working only with Tensorflow ver. 1.12 on
   
   4. Checking installed tensorflow (and his components) version:
      ```
-     python -c 'import h5py; print(h5py.version.info)'  -->> python 2.7
+     python -c 'import h5py; print(h5py.version.info)' 
      
-     python -c 'import tensorflow as tf; print(tf.__version__)' -->> python 2.7
+     python -c 'import tensorflow as tf; print(tf.__version__)'
    
      python -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
      
