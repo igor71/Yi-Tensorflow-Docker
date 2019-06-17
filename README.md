@@ -53,4 +53,38 @@ Note, Current OpenVINO version (1.144) working only with Tensorflow ver. 1.12 on
      python -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
      
      ```
+     
+  5. In order to run OpenVino based command as non-root user need setup ENV Variaables first
+     
+     ```
+     source /tmp/setupvars.sh
+     ```
+     
+     Running test as non-root user:
+     
+     ```
+     cd /tmp
+     
+     cp -R /media/common/USERS/Sagi/OpenVINO .
+     
+     cd OpenVINO
+     
+     python ssh_v2_VINO.py
+     
+     ```
+     
+     Checking Installation Test (root access requered)
+     
+     ```
+     su openvino
+     
+     cd /opt/intel/openvino/deployment_tools/demo
+     
+     ./demo_squeezenet_download_convert_run.sh
+     
+     ```
+     
+     
+     
+  
  
