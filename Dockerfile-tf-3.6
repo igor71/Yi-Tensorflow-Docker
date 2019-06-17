@@ -46,7 +46,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libzmq3-dev \
     libcurl3-dev \
     libgoogle-perftools-dev \		 
-    pkg-config \  
+    pkg-config \
+    cpio \
+    sudo \
     python3-tk && \    
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*  
@@ -71,7 +73,6 @@ RUN python3.6 -m pip --no-cache-dir install \
     more_itertools \
     utils \
     bs4 \
-    opencv-python \
     python3-utils \
     scikit-image \
     xmltodict \
@@ -80,8 +81,8 @@ RUN python3.6 -m pip --no-cache-dir install \
     pymongo \
     sacred \
     tables \
-    keras-applications==1.0.6 \
-    keras-preprocessing==1.0.5 \
+    keras-applications \
+    keras-preprocessing \
     glances \
     gpustat \
     urllib3==1.21.1 && \
@@ -129,8 +130,36 @@ ARG FILE_NAME
 RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
     pip --no-cache-dir install --upgrade ${FILE_NAME} && \
     rm -f ${FILE_NAME}  
+    
+    
+##################################################
+#                Installing OpenVINO             #
+##################################################
 
-  
+ARG VER=l_openvino_toolkit_p_2019.1.144.tgz
+RUN cd /tmp && \
+    curl -OSL tp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/${VER} -o ${VER} && \
+    pv -f ${VER} | tar xpf - -C $PWD && \
+    cd l_openvino_toolkit_p_2019.1.144 && \
+    sed -i 's/decline/accept/g' silent.cfg && \
+    ./install.sh -s silent.cfg --ignore-signature && \
+    cd /opt/intel/openvino/install_dependencies && \
+    ./install_openvino_dependencies.sh
+    source /opt/intel/openvino/bin/setupvars.sh && \
+    pv -f source /opt/intel/openvino/bin/setupvars.sh > /tmp/setupvars.sh && \
+    chmod o+x /tmp/setupvars.sh && \
+    ################### Instlling Tensorflow Support #########################
+    cd /opt/intel/openvino/deployment_tools/model_optimizer/install_prerequisites && \
+    ./install_prerequisites_tf.sh && \
+    cd /tmp && \
+    rm -rf l_openvino_toolkit_p_2019.1.144* && \
+    cd /opt/intel/openvino_2019.1.144/python/python3.6/openvino/inference_engine && \
+    sed -i '/IENetReader/d' __init__.py && \
+    sed -i '$ a __all__ = ["IENetwork", "IEPlugin"] #, "IENetReader"]' __init__.py && \
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
+    
+      
 ##################################################
 # Configure the build for our CUDA configuration #
 ##################################################
