@@ -18,7 +18,7 @@ docker build -f Dockerfile-OpenVINO-Base -t yi/openvino:1.144 .
  ```
  docker run -it -d  --name openvino -v /media:/media yi/openvino:1.144
  
- yi-dockeradmin openvino_base
+ yi-dockeradmin openvino
  
  ```
  
