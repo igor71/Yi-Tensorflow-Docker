@@ -20,7 +20,7 @@ docker build -f Dockerfile-OpenVINO-Base -t yi/openvino:1.144 .
  
  ```
  
- # Running tests as root inside docker container:
+ ### Running tests as root inside docker container:
  
  ```
  cd /opt/intel/openvino/deployment_tools/demo
@@ -29,7 +29,7 @@ docker build -f Dockerfile-OpenVINO-Base -t yi/openvino:1.144 .
 
 ```
 
-# Running test as non-root user inside docker container:
+### Running test as non-root user inside docker container:
 
 ```
 su openvino
