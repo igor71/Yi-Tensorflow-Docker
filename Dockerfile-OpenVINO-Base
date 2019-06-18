@@ -155,6 +155,7 @@ RUN set -ex; \
 
 RUN python -m pip --no-cache-dir install \
     ipykernel \
+    opencv-python \
     pillow \
     matplotlib \
     numpy \
