@@ -4,23 +4,24 @@ pipeline {
         stage('Import yi/tflow-gui Docker Image') {
             steps {
                 sh '''#!/bin/bash -xe
-                   # Bacic Docker Image For Tensorflow Version 2.0
+                   # Bacic Docker Image For Tensorflow Version 1.14.0
                       image_id="$(docker images -q yi/tflow-gui:latest)"
                       echo "Available Basic Docker Image Is: $image_id"
                     
                    # Check If Docker Image Exist On Desired Server 
-		      if [ "$image_id" != "eaf424ee8e35" ]; then
-		         echo "Wrong Docker Image!!! Removing..."
-                         docker rmi -f yi/tflow-gui:latest
-			 pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
-                         docker tag eaf424ee8e35 yi/tflow-gui:latest
-                      elif [ "$image_id" == "" ]; then
-                         echo "Docker Image Does Not Exist!!!"
-                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
-                         docker tag eaf424ee8e35 yi/tflow-gui:latest
-                      else
-                         echo "Docker Image Already Exist"
-                      fi
+		      if [ "$image_id" == "" ]; then
+                      echo "Docker Image Does Not Exist!!!"
+                      pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
+                      docker tag eaf424ee8e35 yi/tflow-gui:latest
+                   elif [ "$image_id" != "eaf424ee8e35" ]; then
+		      echo "Wrong Docker Image!!! Removing..."
+                      docker rmi -f yi/tflow-gui:latest
+                      pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/Ubuntu-16/yi-tflow-gui-latest.tar | docker load
+                      docker tag eaf424ee8e35 yi/tflow-gui:latest
+                   else
+                        echo "Docker Image Already Exist"
+                   fi
+		            ''' 
 		            ''' 
             }
         }
