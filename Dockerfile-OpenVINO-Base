@@ -46,7 +46,7 @@ RUN apt-get install -y --no-install-recommends \
     htop \
     iputils-ping \
     git && \
-	apt-get clean && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 
@@ -153,7 +153,6 @@ RUN set -ex; \
 RUN python -m pip --no-cache-dir install \
     ipykernel \
     pillow \
-    opencv-python \
     matplotlib \
     numpy \
     scipy \
@@ -165,11 +164,40 @@ RUN python -m pip --no-cache-dir install \
     rm -rf /var/lib/apt/lists/*
 
 
-###########################################
-# Add ENV For OpenVINO to LD_LIBRARY_PATH #
-###########################################
+#################################################
+#                Installing OpenVINO             #
+##################################################
 
-ENV LD_LIBRARY_PATH=/opt/intel/openvino_2019.1.144/deployment_tools/inference_engine/external/gna/lib:/opt/intel/openvino_2019.1.144/deployment_tools/inference_engine/external/mkltiny_lnx/lib:/opt/intel/openvino_2019.1.144/deployment_tools/inference_engine/external/tbb/lib:/opt/intel/openvino_2019.1.144/deployment_tools/inference_engine/lib/intel64:$LD_LIBRARY_PATH
+ARG VER=l_openvino_toolkit_p_2019.1.144.tgz
+RUN cd /tmp && \
+    curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/${VER} -o ${VER} && \
+    pv -f ${VER} | tar xpzf - -C $PWD && \
+    cd l_openvino_toolkit_p_2019.1.144 && \
+    sed -i 's/decline/accept/g' silent.cfg && \
+    ./install.sh -s silent.cfg --ignore-signature && \
+    cd /opt/intel/openvino/install_dependencies && \
+    ./install_openvino_dependencies.sh && \
+    /bin/bash -c "source /opt/intel/openvino/bin/setupvars.sh" && \
+    pv -f /opt/intel/openvino/bin/setupvars.sh > /tmp/setupvars.sh && \
+    chmod o+x /tmp/setupvars.sh && \
+    cd /tmp && \
+    rm -rf l_openvino_toolkit_p_2019.1.144* && \
+    cd /opt/intel/openvino_2019.1.144/python/python3.6/openvino/inference_engine && \
+    sed -i '/IENetReader/d' __init__.py && \
+    sed -i '$ a __all__ = ["IENetwork", "IEPlugin"] #, "IENetReader"]' __init__.py && \
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
+    
+    
+#######################################
+# Set User OPENVINO User To The image #
+#######################################
+
+RUN useradd -m -d /home/jenkins -s /bin/bash openvino && \
+    echo "openvino:openvino" | chpasswd && \
+
+# Add the jenkins user to sudoers
+    sed -i '23 a openvino  ALL=(ALL)  NOPASSWD: ALL' etc/sudoers
 
 
 #########################################
