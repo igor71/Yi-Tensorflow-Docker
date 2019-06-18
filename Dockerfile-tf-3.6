@@ -45,11 +45,11 @@ RUN ldconfig /usr/local/cuda-9.0/targets/x86_64-linux/lib/stubs && \
 #       Installing yi-dockeradmin inside docker image     #
 ###########################################################
 
-RUN ln -s /media/common/IT/YiDockerScripts/yi-dockeradmin /usr/local/bin/yi-dockeradmin 
-RUN sed -i -e '$a\\' /etc/bash.bashrc && /
-    sed -i -e '$a\###### Adding yi-dockeradmin Function ######\' /etc/bash.bashrc && /
-    sed -i -e '$a\source /usr/local/bin/yi-dockeradmin\' /etc/bash.bashrc && /
-    sed -i -e '$a\############################################\' /etc/bash.bashrc
+RUN ln -s /media/common/IT/YiDockerScripts/yi-dockeradmin /usr/local/bin/yi-dockeradmin && \
+    sed -i '$a\\' /etc/bash.bashrc && \
+    sed -i '$a\###### Adding yi-dockeradmin Function ######\' /etc/bash.bashrc && \
+    sed -i '$a\source /usr/local/bin/yi-dockeradmin\' /etc/bash.bashrc && \
+    sed -i '$a\############################################\' /etc/bash.bashrc
     
     
     
