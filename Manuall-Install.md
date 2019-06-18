@@ -3,6 +3,8 @@
  ```
 git clone --branch=r1.1X-OpenVINO --depth=1 https://github.com/igor71/Yi-Tensorflow-Docker 
 
+cd Yi-Tensorflow-Docker
+
 ```
 
 ### Build the docker:
