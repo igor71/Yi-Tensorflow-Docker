@@ -16,7 +16,10 @@ RUN mkdir /tmp/openmpi && \
     make -j $(nproc) all && \
     make install && \
     ldconfig && \
-    rm -rf /tmp/openmpi
+    cd /tmp && \
+    rm -rf openmpi && \
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
     
 
 #################################################	
@@ -32,4 +35,22 @@ RUN ldconfig /usr/local/cuda-9.0/targets/x86_64-linux/lib/stubs && \
     HOROVOD_GPU_ALLREDUCE=NCCL HOROVOD_WITH_TENSORFLOW=1 pip install --no-cache-dir dist/horovod*.whl && \
     ldconfig && \
     cd .. && \
-    rm -rf horovod
+    cp horovod/examples/keras_mnist_advanced.py . && \
+    rm -rf horovod && \
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
+    
+    
+###########################################################
+#       Installing yi-dockeradmin inside docker image     #
+###########################################################
+
+RUN ln -s /media/common/IT/YiDockerScripts/yi-dockeradmin /usr/local/bin/yi-dockeradmin && /
+    sed -i -e '$a\\' /etc/bash.bashrc && /
+    sed -i -e '$a\###### Adding yi-dockeradmin Function ######\' /etc/bash.bashrc && /
+    sed -i -e '$a\source /usr/local/bin/yi-dockeradmin\' /etc/bash.bashrc && /
+    sed -i -e '$a\############################################\' /etc/bash.bashrc
+    
+    
+    
+    
