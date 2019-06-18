@@ -21,8 +21,7 @@ pipeline {
                    else
                         echo "Docker Image Already Exist"
                    fi
-		            ''' 
-		            ''' 
+		   ''' 
             }
         }
         stage('Build Docker Image ') {
