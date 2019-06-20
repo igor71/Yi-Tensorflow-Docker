@@ -1,8 +1,12 @@
 # TensorFlow C++ and Python Image Recognition Demo
 
-### Source:  https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/label_image/README.md
+### Source: 
 
-### TS: https://github.com/tensorflow/tensorflow/issues/351
+https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/label_image/README.md
+
+### TS:
+
+https://github.com/tensorflow/tensorflow/issues/351
 
 This example shows how you can load a pre-trained TensorFlow network and use it
 to recognize objects in images in C++. For Java see the [Java
