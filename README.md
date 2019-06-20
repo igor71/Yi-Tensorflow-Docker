@@ -55,6 +55,12 @@ Build yi/tflow-vnc:X.X.X Image
      
   5. Checking horovod installation:
      ```
+     Connect to chosen VNC session and run Terminal
+     
+     yi-dockeradmin <docker_container_name>
+   
+     cd /tmp/examples
+     
      horovodrun -np 4 -H localhost:4 python keras_mnist_advanced.py 
      ```
  
