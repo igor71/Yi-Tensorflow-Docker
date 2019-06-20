@@ -9,7 +9,7 @@ export CI_BUILD_PYTHON=python PYTHON_BIN_PATH=/usr/local/bin/python
 
 export PYTHON_LIB_PATH=/usr/local/lib/python3.6/site-packages
 
-export TF_CUDA_VERSION=9.0.176 TF_CUDNN_VERSION=7.4.1.5
+export TF_CUDA_VERSION=9.0 TF_CUDNN_VERSION=7
 
 export TF_NEED_CUDA=1 TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1,7.0
 
