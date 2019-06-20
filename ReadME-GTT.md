@@ -1,5 +1,9 @@
 # TensorFlow C++ and Python Image Recognition Demo
 
+### Source:  https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/label_image/README.md
+
+### TS: https://github.com/tensorflow/tensorflow/issues/351
+
 This example shows how you can load a pre-trained TensorFlow network and use it
 to recognize objects in images in C++. For Java see the [Java
 README](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/java),
@@ -18,8 +22,11 @@ packaged in the repo because of its size. Instead, you must first download the
 file to the `data` directory in the source tree:
 
 ```bash
-$ curl -L "https://storage.googleapis.com/download.tensorflow.org/models/inception_v3_2016_08_28_frozen.pb.tar.gz" |
-  tar -C tensorflow/examples/label_image/data -xz
+cd /
+
+wget https://storage.googleapis.com/download.tensorflow.org/models/inception_dec_2015.zip -O tensorflow/tensorflow/examples/label_image/data/inception_dec_2015.zip
+
+unzip tensorflow/tensorflow/examples/label_image/data/inception_dec_2015.zip -d tensorflow/tensorflow/examples/label_image/data/
 ```
 
 Then, as long as you've managed to build the main TensorFlow framework, you
