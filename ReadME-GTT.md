@@ -8,6 +8,10 @@ https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/label_i
 
 https://github.com/tensorflow/tensorflow/issues/351
 
+### Using Graph Transform Tool:
+
+https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/graph_transforms/README.md#inspecting-graphs
+
 This example shows how you can load a pre-trained TensorFlow network and use it
 to recognize objects in images in C++. For Java see the [Java
 README](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/java),
