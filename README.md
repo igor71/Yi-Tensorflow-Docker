@@ -59,7 +59,7 @@ Build yi/tflow-vnc:X.X.X Image
      
      yi-dockeradmin <docker_container_name>
    
-     cd /tmp/examples
+     cd /tmp
      
      horovodrun -np 4 -H localhost:4 python keras_mnist_advanced.py 
      ```
