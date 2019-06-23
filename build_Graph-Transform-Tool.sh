@@ -37,8 +37,8 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
         i5-6500|i7-5960X|i7-6900K|i7-6950X)
            echo "Building Graph Transform Tool Package For $CPU"
            INSTALL_DIR=/whl
-           HOME=/home/jenkins
-           bazel build //tensorflow/tools/graph_transforms:transform_graph && \
+           HOME=/root
+	   bazel build //tensorflow/tools/graph_transforms:summarize_graph && \
            mkdir ${INSTALL_DIR}
                 ;;
 
@@ -46,16 +46,16 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
            echo "Building Tensorflow Package For $CPU"
            INSTALL_DIR=/whl
            HOME=/home/jenkins
-            bazel build //tensorflow/tools/graph_transforms:transform_graph && \
-            mkdir ${INSTALL_DIR}
+           bazel build //tensorflow/tools/graph_transforms:summarize_graph && \
+           mkdir ${INSTALL_DIR}
                 ;;
 
         E5-2650|E5-2698)
            echo "Building Tensorflow Package For $CPU"
            INSTALL_DIR=/whl
            HOME=/home/jenkins
-            bazel build //tensorflow/tools/graph_transforms:transform_graph && \
-            mkdir ${INSTALL_DIR}
+           bazel build //tensorflow/tools/graph_transforms:summarize_graph && \
+           mkdir ${INSTALL_DIR}
 
                 break
                 ;;
