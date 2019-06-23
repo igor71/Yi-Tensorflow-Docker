@@ -77,9 +77,9 @@ Build Graph Transform Tool inside relevant tflow-build docker container
      
      ####################### Installing Desired Tensorflow Version #######################################################
      
-     INSTALL_DIR=/media/common/DOCKER_IMAGES/Tensorflow/Tensorflow-1.3.1-8.0-cudnn5-devel-ubuntu14.04-Server_8.9
+     INSTALL_DIR=/media/common/DOCKER_IMAGES/Tensorflow/Tensorflow-1.13.1-9.0-cudnn7-devel-ubuntu16.04-Server_2.3.4.5
      
-     cd pip --no-cache-dir install --upgrade ${INSTALL_DIR}/tensorflow-1*.whl
+     pip --no-cache-dir install --upgrade ${INSTALL_DIR}/tensorflow-1*.whl
      
      ###################### Building Graph Transform Tool #################################################################
      
