@@ -89,7 +89,7 @@ Build Graph Transform Tool inside relevant tflow-build docker container
      
      git clone --branch=Graph-Transform-Tool --depth=1 https://github.com/igor71/Yi-Tensorflow-Docker
     
-     cp /Yi-Tensorflow-Docker/build_Graph-Transform-Tool.sh tflow-build.sh ..
+     cp /Yi-Tensorflow-Docker/build_Graph-Transform-Tool.sh ..
      
      cp /Yi-Tensorflow-Docker/tflow-build.sh ..
      
