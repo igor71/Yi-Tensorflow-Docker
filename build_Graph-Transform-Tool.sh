@@ -37,7 +37,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
         i5-6500|i7-5960X|i7-6900K|i7-6950X)
            echo "Building Graph Transform Tool Package For $CPU"
            INSTALL_DIR=/whl
-           HOME=/root
 	   bazel build //tensorflow/tools/graph_transforms:summarize_graph && \
            mkdir ${INSTALL_DIR}
                 ;;
@@ -45,7 +44,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
 	i9-7940X)
            echo "Building Tensorflow Package For $CPU"
            INSTALL_DIR=/whl
-           HOME=/home/jenkins
            bazel build //tensorflow/tools/graph_transforms:summarize_graph && \
            mkdir ${INSTALL_DIR}
                 ;;
@@ -53,7 +51,6 @@ cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq)
         E5-2650|E5-2698)
            echo "Building Tensorflow Package For $CPU"
            INSTALL_DIR=/whl
-           HOME=/home/jenkins
            bazel build //tensorflow/tools/graph_transforms:summarize_graph && \
            mkdir ${INSTALL_DIR}
 
@@ -74,13 +71,9 @@ PACKAGE_DIR=graph_transforms
 
 if [ -d "$PACKAGE_DIR" ]; then tar cpzf - ${PACKAGE_DIR} -P | pv -s $(du -sb ${PACKAGE_DIR} | awk '{print $1}') > ${INSTALL_DIR}/${PACKAGE_DIR}.tar.gz; fi
 
-pv -f ${INSTALL_DIR}/${PACKAGE_DIR}.tar.gz > $HOME/${PACKAGE_DIR}.tar.gz
-
-cd ${HOME}
-
 ls -lh ${INSTALL_DIR}
      if [ "$?" != "0" ]; then
-          echo "There is no Graph Transform Tool package in $HOME dir!!!"
+          echo "There is no Graph Transform Tool package in $INSTALL_DIR dir!!!"
           exit -1
      fi
 
