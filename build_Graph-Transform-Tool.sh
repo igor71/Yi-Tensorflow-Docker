@@ -77,4 +77,4 @@ ls -lh ${INSTALL_DIR}
           exit -1
      fi
 
-echo "All Done!!! Look for Graph Transform Tool whl package at ${PACKAGE_DIR}"
+echo "All Done!!! Look for GTT summarize_graph package at ${PACKAGE_DIR} directory"
