@@ -69,11 +69,11 @@ Build Graph Transform Tool inside relevant tflow-build docker container
      
      ######################### Running Docker Container ##################################################################
      
-     nvidia-docker run -d -p 37001:22 --name tflow_build -v /media:/media yi/tflow-build:X.X-python-v.3.6 -->> Ubuntu-16
+     nvidia-docker run -d -p 37001:22 --name gtt_build -v /media:/media yi/tflow-build:X.X-python-v.3.6 -->> Ubuntu-16
      
-     docker run --runtime=nvidia -d -p 37001:22 --name tflow_build -v /media:/media yi/tflow-build:X.X-python-v.3.6 -->> Ubuntu-18
+     docker run --runtime=nvidia -d -p 37001:22 --name gtt_build -v /media:/media yi/tflow-build:X.X-python-v.3.6 -->> Ubuntu-18
      
-     yi-dockeradmin tflow_build
+     yi-dockeradmin gtt_build
      
      ####################### Installing Desired Tensorflow Version #######################################################
      
@@ -88,12 +88,10 @@ Build Graph Transform Tool inside relevant tflow-build docker container
      rm build_tf_package.sh tflow-build.sh
      
      git clone --branch=Graph-Transform-Tool --depth=1 https://github.com/igor71/Yi-Tensorflow-Docker
+    
+     cp /Yi-Tensorflow-Docker/build_Graph-Transform-Tool.sh tflow-build.sh ..
      
-     cd Yi-Tensorflow-Docker
-     
-     cp build_Graph-Transform-Tool.sh tflow-build.sh ..
-     
-     cd ..
+     cp /Yi-Tensorflow-Docker/tflow-build.sh ..
      
      rm -rf Yi-Tensorflow-Docker
      
