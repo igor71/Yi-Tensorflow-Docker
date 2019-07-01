@@ -4,17 +4,25 @@ pipeline {
         stage('Test yi/tflow-vnc Docker Image') {
             steps {
                 sh '''#!/bin/bash -xe
-                   # Bacic Docker Image For Tensorflow Version 1.13
-                      image_id="$(docker images -q yi/tflow-vnc:1.13.1-python-3.6)"
+                   # Bacic Docker Image For Tensorflow & Horovod Version
+                      image_id="$(docker images -q yi/tflow-gui:horovod)"
                       echo "Basic Docker Image For Current Branch Is: $image_id"
+		      
                       # Check If Docker Image Exist On Desired Server
-                      if [[ "$(docker images -q yi/tflow-vnc:1.13.1-python-3.6 2> /dev/null)" == "" ]]; then
-                         echo "ERROR!!! No Base Docker Image. Please Build it first!!"
-			 exit 1
+                      if [[ "$(docker images -q yi/tflow-gui:horovod 2> /dev/null)" == "" ]]; then
+                         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-horovod.tar | docker load
+			 docker tag ae8112ebdc9ayi/tflow-gui:latest
+			 
+		      elif [ "$image_id" != "ae8112ebdc9ayi" ]; then
+		         echo "Wrong Docker Image!!! Removing..."
+			 docker rmi -f yi/tflow-gui:latest
+			 pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-horovod.tar | docker load
+			 docker tag ae8112ebdc9ayi/tflow-gui:latest
+		      
                       else
                          echo "Docker Image Already Exist"
                       fi
-		            ''' 
+		  '''
             }
         }
         stage('Build Docker Image ') {
