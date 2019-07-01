@@ -9,9 +9,9 @@ pipeline {
                       echo "Basic Docker Image For Current Branch Is: $image_id"
 		      
                       # Check If Docker Image Exist On Desired Server
-                      if [[ "$(docker images -q yi/tflow-gui:horovod 2> /dev/null)" == "" ]]; then
+                      if [[ "$(docker images -q yi/tflow-gui:latest 2> /dev/null)" == "" ]]; then
                          pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-horovod.tar | docker load
-			 docker tag ae8112ebdc9ayi/tflow-gui:latest
+			 docker tag ae8112ebdc9a yi/tflow-gui:latest
 			 
 		      elif [ "$image_id" != "ae8112ebdc9ayi" ]; then
 		         echo "Wrong Docker Image!!! Removing..."
