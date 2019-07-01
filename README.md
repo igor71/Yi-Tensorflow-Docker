@@ -34,33 +34,78 @@ Build yi/tflow-vnc:X.X.X Image
    tensorflow_version --->> desired tensorflow version
   
    And finally, click on "BUILD" button
-  
-  3. Once build completed, run the docker as foolwing:
+   
+   3. Once build completed, run the docker as foolwing:
   
      ```
-     yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-3.6-horovod-debug    -->> based on python 3.6.8
+     On Master Server -22:
      
+     nvidia-docker run --network=host --name=horovod -v /media:/media -it -d --privileged yi/horovod:1.13.1-python-3.6
+     
+     On Slave Servers:
+     
+     nvidia-docker run --network=host --name=horovod -v /media:/media -it -d --privileged yi/horovod:1.13.1-python-3.6 bash -c "/usr/sbin/sshd -p 12345; sleep infinity"
+     
+     On Master:
+     
+     yi-dockeradmin horovod
+     
+     cd /tmp
+     
+     horovodrun -np 4 -H localhost:4 python keras_mnist_advanced.py -->> single server check
+     
+     In order to suppress Read -1 stderr error when using horovodrun, use folowing command:
+     
+     CUDA_VISIBLE_DEVICES=0,1 horovodrun -np 2 -H localhost:2 python keras_mnist_advanced.py | & grep -v "Read -1"
+     
+     Above command will tun on two GPU's (ID 0 & 1) and suppress Read -1 stderr error
+     
+     cd /tmp
+     
+     horovodrun -np 12 -H server-22:8,server-19:4 -p 12345 python keras_mnist_advanced.py -->> multiple servers check
      ```
-     where x.x.x is tensorflow version, e.g. 1.8.0 or 1.4.1... etc
   
   4. Checking installed tensorflow (and his components) version:
      ```
      python -c 'import h5py; print(h5py.version.info)' 
   
      python -c 'import tensorflow as tf; print(tf.__version__)'
-     
-     python -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
-    
-     ```
-     
-  5. Checking horovod installation:
-     ```
-     Connect to chosen VNC session and run Terminal
-     
-     yi-dockeradmin <docker_container_name>
    
-     cd /tmp
+     python -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
      
-     horovodrun -np 4 -H localhost:4 python keras_mnist_advanced.py 
      ```
- 
+  5. Horovod Building Options:
+  
+     ```
+     bdist_wheel ---> will build you a wheel file on that can be installed on a server with exactly the same build flags (e.g.
+     HOROVOD_GPU_ALLREDUCE) and version of TensorFlow, MPI, CUDA, and NCCL as the server you built the wheel on.
+     
+     sdist -->> provides source tarball that you can install on a target server with build flags and versions of dependencies available
+     on the server that you're installing the tarball.
+     ```
+     Reference: https://github.com/horovod/horovod/issues/155
+     
+  6. Specify running on a specific GPU:
+     
+     This is something that's actually not controlled by mpirun, but within your code. The mpirun command is just specifying how many
+     "ranks" (processes) to execute on each node, not which GPUs to use.
+     
+     The GPU assignment happens somewhere in your training script train.py with a line like this (typically):
+     ```
+     config = tf.ConfigProto()
+     config.gpu_options.visible_device_list = str(hvd.local_rank())
+     ```
+     `hvd.local_rank()` says "use GPU with the same ID as the local rank", but you can in fact set the visible device list to be
+     whatever you want. For example, to achieve what you're trying to do, you can explicitly map individual ranks to devices, like:
+     ```
+     device_map = {
+     0: 0,
+     1: 2,
+     2: 1,
+     3: 2
+     }
+     config = tf.ConfigProto()
+     config.gpu_options.visible_device_list = str(device_map[hvd.rank()])
+     ```
+     Reference: https://github.com/horovod/horovod/issues/572
+  
