@@ -54,7 +54,7 @@ Build yi/tflow-vnc:X.X.X Image
      
      In order to suppress Read -1 stderr error when using horovodrun, use folowing command:
      
-     CUDA_VISIBLE_DEVICES=0,1 horovodrun -np 2 -H localhost:2 python keras_mnist_advanced.py | & grep -v "Read -1"
+     CUDA_VISIBLE_DEVICES=0,1 horovodrun -np 2 -H localhost:2 python keras_mnist_advanced.py |& grep -v "Read -1"
      
      Above command will tun on two GPU's (ID 0 & 1) and suppress Read -1 stderr error
      
