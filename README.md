@@ -35,7 +35,7 @@ Build yi/tflow-vnc:X.X.X Image
   
    And finally, click on "BUILD" button
    
-   3. Once build completed, run the docker as foolwing:
+3. Once build completed, run the docker as foolwing:
   
      ```
      yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-3.6
@@ -54,7 +54,7 @@ Build yi/tflow-vnc:X.X.X Image
      
      ```
   
-  4. Checking installed tensorflow (and his components) version:
+4. Checking installed tensorflow (and his components) version:
      ```
      python -c 'import h5py; print(h5py.version.info)' 
   
@@ -63,7 +63,7 @@ Build yi/tflow-vnc:X.X.X Image
      python -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
      
      ```
-  5. Horovod Building Options:
+5. Horovod Building Options:
   
      ```
      bdist_wheel ---> will build you a wheel file on that can be installed on a server with exactly the same build flags (e.g.
@@ -74,7 +74,7 @@ Build yi/tflow-vnc:X.X.X Image
      ```
      Reference: https://github.com/horovod/horovod/issues/155
      
-  6. Specify running on a specific GPU:
+6. Specify running on a specific GPU:
      
      This is something that's actually not controlled by mpirun, but within your code. The mpirun command is just specifying how many
      "ranks" (processes) to execute on each node, not which GPUs to use.
