@@ -38,6 +38,7 @@ Build yi/tflow-vnc:X.X.X Image
    3. Once build completed, run the docker as foolwing:
   
      ```
+     yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-3.6
      
      yi-dockeradmin horovod
      
@@ -51,9 +52,6 @@ Build yi/tflow-vnc:X.X.X Image
      
      Above command will tun on two GPU's (ID 0 & 1) and suppress Read -1 stderr error
      
-     cd /tmp
-     
-     horovodrun -np 12 -H server-22:8,server-19:4 -p 12345 python keras_mnist_advanced.py -->> multiple servers check
      ```
   
   4. Checking installed tensorflow (and his components) version:
