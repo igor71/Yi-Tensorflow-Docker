@@ -1,8 +1,85 @@
-FROM yi/tflow-vnc:1.13.1-python-3.6
- 
+FROM yi/tflow-gui:latest
+
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
 
+#################################################
+#     Python 3.6 installations for dev          #
+#################################################
+
+RUN apt-get update && apt-get install -y software-properties-common curl wget pv && \
+    add-apt-repository ppa:jonathonf/python-3.6 && \
+    apt-get update && apt-get install -y --no-install-recommends \
+    python3.6 \
+    python3.6-dev \
+    python3.6-venv \
+    && \ 
+    apt-get clean && \ 
+    rm -rf /var/lib/apt/lists/*
+	
+RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3 && \
+    ln -s /usr/local/bin/pip /usr/local/bin/pip3 && \
+    ln -s /usr/bin/python3.6 /usr/local/bin/python
+    
+RUN curl -fSsL -O ftp://jenkins-cloud/pub/Develop/get-pip.py && \
+    python3.6 get-pip.py && \
+    rm get-pip.py && \
+    python --version 
+
+
+# Python 3.6 Will be used as default version
+
+ARG python=3.6
+ENV PYTHON_VERSION=${python}
+
+
+############################################	
+#    Installing basic environment app's    #
+############################################
+
+RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
+        build-essential \
+        cmake \
+        git \
+        curl \
+        vim \
+        wget \
+        pv \
+        ca-certificates \
+        libsm6 \
+        libxext6 \
+        libxrender-dev \
+        libjpeg-dev \
+        libpng-dev 
+	
+	
+############################################	
+#      Installing build environment app    #
+############################################
+	
+RUN python -m pip --no-cache-dir install \
+    opencv-python \
+    sklearn \
+    albumentations \
+    easydict \
+    texttable \
+    tflearn \
+    keras \
+    h5py
+
+
+###################################
+# Install TensorFlow GPU version. #
+###################################
+
+RUN cd /
+ARG FTP_PATH
+ARG FILE_NAME
+RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
+    pip --no-cache-dir install --upgrade ${FILE_NAME} && \
+    rm -f ${FILE_NAME}
+    
+ 
 ###################################
 #        Install Open MPI.        #
 ###################################
@@ -16,10 +93,7 @@ RUN mkdir /tmp/openmpi && \
     make -j $(nproc) all && \
     make install && \
     ldconfig && \
-    cd /tmp && \
-    rm -rf openmpi && \
-    apt-get clean && \ 
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /tmp/openmpi
     
 
 #################################################	
@@ -35,17 +109,36 @@ RUN ldconfig /usr/local/cuda-9.0/targets/x86_64-linux/lib/stubs && \
     HOROVOD_GPU_ALLREDUCE=NCCL HOROVOD_WITH_TENSORFLOW=1 pip install --no-cache-dir dist/horovod*.whl && \
     ldconfig && \
     cd .. && \
-    cp horovod/examples/keras_mnist_advanced.py . && \
-    rm -rf horovod && \
+    rm -rf horovod
+    
+ 
+#############################################################
+# Install OpenSSH for MPI to communicate between containers #
+#############################################################
+
+RUN apt-get install -y --no-install-recommends openssh-client openssh-server && \
+    mkdir -p /var/run/sshd
+    
+    
+#######################################################################
+# Allow OpenSSH to talk to containers without asking for confirmation #
+#######################################################################
+
+RUN cat /etc/ssh/ssh_config | grep -v StrictHostKeyChecking > /etc/ssh/ssh_config.new && \
+    echo "    StrictHostKeyChecking no" >> /etc/ssh/ssh_config.new && \
+    mv /etc/ssh/ssh_config.new /etc/ssh/ssh_config
+    
+    
+####################################
+# Allow SSH login without password #
+####################################    
+
+RUN cd /root && \
+    curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/Horovod/ssh-horovod.tar && \
+    pv -f ssh-horovod.tar | tar xpf - -C $PWD && \
+    rm -f ssh-horovod.tar && \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
-    
-    
-#################################################	
-#     Install Python Dependences For Horovod    #
-#################################################
-
-RUN python -m pip --no-cache-dir install keras
     
     
 ###########################################################
@@ -59,5 +152,19 @@ RUN ln -s /media/common/IT/YiDockerScripts/yi-dockeradmin /usr/local/bin/yi-dock
     sed -i '$a\############################################\' /etc/bash.bashrc
     
     
-    
-    
+#########################################
+# Add Welcome Message With Instructions #
+#########################################
+
+RUN printf '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
+	>> /etc/bash.bashrc \
+	; printf "\
+||||||||||||||||||||||||||||||||||||\n\
+|                                  |\n\
+| Docker Image Running Ubuntu 16   |\n\
+| With TensorFlow ver.1.13.1 and   |\n\
+| Build from The Sources Horovod   |\n\
+|                                  |\n\
+||||||||||||||||||||||||||||||||||||\n\
+\n "\
+        > /etc/motd
