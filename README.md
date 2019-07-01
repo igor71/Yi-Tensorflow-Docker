@@ -44,7 +44,7 @@ Build yi/tflow-vnc:X.X.X Image
      
      cd /tmp
      
-     horovodrun -np 4 -H localhost:4 python keras_mnist_advanced.py -->> single server check
+     horovodrun -np 4 -H localhost:4 python keras_mnist_advanced.py 
      
      In order to suppress Read -1 stderr error when using horovodrun, use folowing command:
      
