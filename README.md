@@ -72,9 +72,8 @@ Build yi/tflow-vnc:X.X.X Image
      
      sdist -->> provides source tarball that you can install on a target server with build flags and versions of dependencies available
      on the server that you're installing the tarball.
-     
-     Reference: https://github.com/horovod/horovod/issues/155
      ```
+     Reference: https://github.com/horovod/horovod/issues/155
      
   6. Specify running on a specific GPU:
      
@@ -97,8 +96,7 @@ Build yi/tflow-vnc:X.X.X Image
      }
      config = tf.ConfigProto()
      config.gpu_options.visible_device_list = str(device_map[hvd.rank()])
-     
-     Reference: https://github.com/horovod/horovod/issues/572
      ```
+     Reference: https://github.com/horovod/horovod/issues/572
      
      
