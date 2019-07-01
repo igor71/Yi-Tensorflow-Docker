@@ -64,4 +64,41 @@ Build yi/tflow-vnc:X.X.X Image
      python -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
      
      ```
- 
+  5. Horovod Building Options:
+  
+     ```
+     bdist_wheel ---> will build you a wheel file on that can be installed on a server with exactly the same build flags (e.g.
+     HOROVOD_GPU_ALLREDUCE) and version of TensorFlow, MPI, CUDA, and NCCL as the server you built the wheel on.
+     
+     sdist -->> provides source tarball that you can install on a target server with build flags and versions of dependencies available
+     on the server that you're installing the tarball.
+     
+     Reference: https://github.com/horovod/horovod/issues/155
+     ```
+     
+  6. Specify running on a specific GPU:
+     
+     This is something that's actually not controlled by mpirun, but within your code. The mpirun command is just specifying how many
+     "ranks" (processes) to execute on each node, not which GPUs to use.
+     
+     The GPU assignment happens somewhere in your training script train.py with a line like this (typically):
+     ```
+     config = tf.ConfigProto()
+     config.gpu_options.visible_device_list = str(hvd.local_rank())
+     ```
+     `hvd.local_rank()` says "use GPU with the same ID as the local rank", but you can in fact set the visible device list to be
+     whatever you want. For example, to achieve what you're trying to do, you can explicitly map individual ranks to devices, like:
+     ```
+     device_map = {
+     0: 0,
+     1: 2,
+     2: 1,
+     3: 2
+     }
+     config = tf.ConfigProto()
+     config.gpu_options.visible_device_list = str(device_map[hvd.rank()])
+     
+     Reference: https://github.com/horovod/horovod/issues/572
+     ```
+     
+     
