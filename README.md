@@ -38,7 +38,7 @@ Build yi/tflow-vnc:X.X.X Image
 3. Once build completed, run the docker as foolwing:
   
      ```
-     yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-3.6
+     yi-docker tflow-vnc run :<port_number> --version=x.x.x-python-3.6-horovod-debug
      
      yi-dockeradmin horovod
      
