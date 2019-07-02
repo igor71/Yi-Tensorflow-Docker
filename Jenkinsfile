@@ -13,7 +13,7 @@ pipeline {
                          pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-horovod.tar | docker load
 			 docker tag ae8112ebdc9a yi/tflow-gui:latest
 			 
-		      elif [ "$image_id" != "ae8112ebdc9ayi" ]; then
+		      elif [ "$image_id" != "ae8112ebdc9a" ]; then
 		         echo "Wrong Docker Image!!! Removing..."
 			 docker rmi -f yi/tflow-gui:latest
 			 pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/9.0-cudnn7-base/yi-tflow-gui-horovod.tar | docker load
