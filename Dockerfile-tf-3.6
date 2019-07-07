@@ -165,11 +165,11 @@ RUN cd /tmp && \
 # Set User OPENVINO User To The image #
 #######################################
 
-RUN useradd -m -d /home/jenkins -s /bin/bash openvino && \
+RUN useradd -m -d /home/openvino -s /bin/bash openvino && \
     echo "openvino:openvino" | chpasswd && \
 
-# Add the jenkins user to sudoers
-    sed -i '23 a openvino  ALL=(ALL)  NOPASSWD: ALL' etc/sudoers
+# Add openvino user to sudoers group
+    sed -i '23 a openvino  ALL=(ALL)  NOPASSWD: ALL' /etc/sudoers
 
     
 ##################################################
