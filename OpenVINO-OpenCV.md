@@ -1,5 +1,6 @@
 ### Build OpenCV from source with Intel's Deep Learning Inference Engine backend support inside OpenVINO Docker
 
+ ```
 apt-get update
 
 pip uninstall opencv-python
@@ -41,3 +42,4 @@ make -j$(nproc)
 make install
 
 ldconfig
+ ```
