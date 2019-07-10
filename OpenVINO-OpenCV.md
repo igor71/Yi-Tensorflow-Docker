@@ -43,3 +43,6 @@ make install
 
 ldconfig
  ```
+
+### Reference:
+https://github.com/opencv/opencv/wiki/Intel's-Deep-Learning-Inference-Engine-backend
