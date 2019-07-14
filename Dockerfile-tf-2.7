@@ -3,101 +3,6 @@ FROM yi/tflow-gui:latest
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
 
-#################################################
-#     Python 3.6 installations for dev          #
-#################################################
-
-ENV PYTHON_VERSION=3.6.8
-# If this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 19.1.1
-# > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK, fixing...
-# http://bugs.python.org/issue19846
-ENV LANG C.UTF-8
-
-# Ensure local python is preferred over distribution python
-ENV PATH /usr/local/bin:$PATH
-
-# Extra dependencies & python installation
-RUN apt-get update && apt-get install -y --no-install-recommends \
-	tk-dev \
-	libpq-dev \
-	libssl-dev \
-	openssl \
-	libffi-dev \
-	zlib1g-dev \
-	libsqlite3-dev \
-	&& rm -rf /var/lib/apt/lists/*
-
-ENV GPG_KEY 0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
-
-RUN set -ex \
-	\
-	&& wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" \
-	&& wget -O python.tar.xz.asc "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz.asc" \
-	&& export GNUPGHOME="$(mktemp -d)" \
-	&& gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys "$GPG_KEY" \
-	&& gpg --batch --verify python.tar.xz.asc python.tar.xz \
-	&& { command -v gpgconf > /dev/null && gpgconf --kill all || :; } \
-	&& rm -rf "$GNUPGHOME" python.tar.xz.asc \
-	&& mkdir -p /usr/src/python \
-	&& tar -xJC /usr/src/python --strip-components=1 -f python.tar.xz \
-	&& rm python.tar.xz \
-	\
-	&& cd /usr/src/python \
-	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
-	&& ./configure \
-		--build="$gnuArch" \
-		--enable-loadable-sqlite-extensions \
-		--enable-shared \
-		--with-system-expat \
-		--with-system-ffi \
-		--without-ensurepip \
-	&& make -j "$(nproc)" \
-	&& make install \
-	&& ldconfig \
-	\
-	&& find /usr/local -depth \
-		\( \
-			\( -type d -a \( -name test -o -name tests \) \) \
-			-o \
-			\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
-		\) -exec rm -rf '{}' + \
-	&& rm -rf /usr/src/python \
-	\
-	&& python3 --version
-
-# Make some useful symlinks that are expected to exist
-RUN cd /usr/local/bin \
-        && ln -s idle3 idle \
-	&& ln -s pydoc3 pydoc \
-	&& ln -s python3 python \
-	&& ln -s /usr/local/bin/python3.6 /usr/bin/python3.6 \
-	&& ln -s python3-config python-config
-	
-##################################	
-# Installing PIP and Dependences #
-##################################	
-
-RUN set -ex; \
-	\
-	wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py'; \
-	\
-	python get-pip.py \
-		--disable-pip-version-check \
-		--no-cache-dir \
-		"pip==$PYTHON_PIP_VERSION" \
-	; \
-	pip --version; \
-	\
-	find /usr/local -depth \
-		\( \
-			\( -type d -a \( -name test -o -name tests \) \) \
-			-o \
-			\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
-		\) -exec rm -rf '{}' +; \
-	rm -f get-pip.py
-
-
 ##################################################################
 #                     Possible TensorRT Support                  #
 ##################################################################
@@ -122,25 +27,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl3-dev \
     libgoogle-perftools-dev \
     zlib1g-dev \
-    pkg-config \  
+    pkg-config \ 
+    python \ 
+    python-dev \
     python3-tk && \    
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/* 
     
    
 RUN python -m pip --no-cache-dir install \ 
-    Pillow \
-    toposort \
     networkx \
     pytest \
     ipykernel \
-    jupyter \
-    matplotlib \
     numpy \
     pandas \
     scipy \
     sklearn \
-    tensorlayer \
     scikit-learn \
     tqdm \
     click==6.7 \
@@ -148,7 +50,7 @@ RUN python -m pip --no-cache-dir install \
     utils \
     bs4 \
     opencv-python \
-    python3-utils \
+    python-utils \
     scikit-image \
     xmltodict \
     easydict \
@@ -156,26 +58,12 @@ RUN python -m pip --no-cache-dir install \
     pymongo \
     sacred \
     tables \
-    keras-applications \
-    keras-preprocessing \
     glances \
     gpustat \
     texttable \
     albumentations \
     urllib3==1.21.1 && \
     python -m ipykernel.kernelspec && \
-    apt-get clean && \ 
-    rm -rf /var/lib/apt/lists/*
-    
-    
-################################################################## 
-#              Installing XIAOYI Packages                        #
-##################################################################
-
-ARG INSTALL_DIR=/root/.pip
-RUN if [ ! -d "$INSTALL_DIR" ]; then mkdir -p $INSTALL_DIR; fi
-COPY pip.conf $INSTALL_DIR
-RUN pip install xiaoyi --upgrade &&\
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
@@ -204,15 +92,14 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.2
 ##########################################
 
   RUN apt-get update && apt-get install -y --no-install-recommends \
-      libgraphviz-dev \
-      pkg-config
+      libgraphviz-dev 
         
-  RUN python3.6 -m pip --no-cache-dir install \
+  RUN python -m pip --no-cache-dir install \
       ipdb \
       imageio \
       graphviz \
       tensorboardX \
-      qpth \
+      qpth==0.0.13 \
       torchnet && \
       apt-get clean && \ 
       rm -rf /var/lib/apt/lists/*
@@ -224,28 +111,15 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.2
       apt-get clean && \ 
       rm -rf /var/lib/apt/lists/*	  
 	  
-  ARG PYTORCH_DEB=http://download.pytorch.org/whl/cu90/torch-1.1.0-cp36-cp36m-linux_x86_64.whl
-  RUN curl -OSL ${PYTORCH_DEB} && \
-      python3.6 -m pip --no-cache-dir install \
-      torch-1.1.0-cp36-cp36m-linux_x86_64.whl \
-      torchvision && \
+  RUN python -m pip --no-cache-dir install \
+      torch==1.0.1.post2 \
+      torchvision==0.2.2.post2 && \
       rm -f torch-1.1.0-cp36-cp36m-linux_x86_64.whl && \
       apt-get clean && \ 
       rm -rf /var/lib/apt/lists/*
     
    
-###################################
-# Install TensorFlow GPU version. #
-###################################
 
-RUN cd /
-ARG FTP_PATH
-ARG FILE_NAME
-RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
-    pip --no-cache-dir install --upgrade ${FILE_NAME} && \
-    rm -f ${FILE_NAME}  
-
-  
 ##################################################
 # Configure the build for our CUDA configuration #
 ##################################################
