@@ -30,9 +30,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \ 
     python \ 
     python-dev \
-    python3-tk && \    
+    python-tk && \    
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/* 
+    
+    
+################################	
+# Updating PIP and Dependences #
+################################
+
+RUN curl -fSsL -O https://bootstrap.pypa.io/get-pip.py && \
+    python get-pip.py && \
+    rm get-pip.py
     
    
 RUN python -m pip --no-cache-dir install \ 
@@ -114,7 +123,6 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.2
   RUN python -m pip --no-cache-dir install \
       torch==1.0.1.post2 \
       torchvision==0.2.2.post2 && \
-      rm -f torch-1.1.0-cp36-cp36m-linux_x86_64.whl && \
       apt-get clean && \ 
       rm -rf /var/lib/apt/lists/*
     
