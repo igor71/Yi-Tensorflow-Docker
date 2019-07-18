@@ -25,9 +25,19 @@ docker build -f Dockerfile-OpenVINO-Base -t yi/openvino:1.144 .
  ### Running tests as root inside docker container:
  
  ```
+ source /opt/intel/openvino/bin/setupvars.sh
+ 
  cd /opt/intel/openvino/deployment_tools/demo
 
 ./demo_squeezenet_download_convert_run.sh
+
+pv /media/common/DOWNLOADS/UBUNTU/OpenVINO/DEMO/squeezenet1.1.xml > /opt/intel/openvino_2019.1.144/deployment_tools/demo/squeezenet1.1.xml
+
+pv /media/common/DOWNLOADS/UBUNTU/OpenVINO/DEMO/squeezenet1.1.bin > /opt/intel/openvino_2019.1.144/deployment_tools/demo/squeezenet1.1.bin
+
+cd /opt/intel/openvino_2019.1.144/deployment_tools/inference_engine/samples/python_samples
+
+python classification_sample/classification_sample.py -m /opt/intel/openvino_2019.1.144/deployment_tools/demo/squeezenet1.1.xml -i /opt/intel/openvino_2019.1.144/deployment_tools/demo/car.png
 
 ```
 
