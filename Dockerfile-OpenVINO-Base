@@ -149,16 +149,6 @@ RUN set -ex; \
 	rm -f get-pip.py
 	
 
-################################################
-#     OpenCV with IE support installation      #
-################################################
-
-ARG OPENCV_IE=opencv_python_inference_engine-4.1.0.4-cp36-cp36m-linux_x86_64.whl
-RUN curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/WHL/$OPENCV_IE -o $PWD/$OPENCV_IE && \
-    python -m pip --no-cache-dir install $OPENCV_IE && \
-    rm -f $OPENCV_IE
-
-
 #################################
 #     Python Installations      #
 #################################
@@ -166,6 +156,7 @@ RUN curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/WHL/$OPENCV_IE -o 
 RUN python -m pip --no-cache-dir install \
     ipykernel \
     pillow \
+    opencv-python \
     matplotlib \
     numpy \
     scipy \
