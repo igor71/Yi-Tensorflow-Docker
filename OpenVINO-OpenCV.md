@@ -1,48 +1,60 @@
 ### Build OpenCV from source with Intel's Deep Learning Inference Engine backend support inside OpenVINO Docker
 
  ```
-apt-get update
+ pv /media/common/DOCKER_IMAGES/OpenVINO/yi-inference-engine-base.tar | docker load
+ docker tag 4ec5f665499d yi/inference-engine:base
+ docker run -it -d --name inference_engine -v /media:/media yi/inference-engine:base
+ yi-dockeradmin inference_engine
+ 
+ mkdir opencv-python-inference-engine && cd opencv-python-inference-engine
+ mkdir dldt opencv build
+ mkdir -p build/dldt
+ mkdir -p build/opencv
+ 
+wget -P $PWD/dldt https://github.com/opencv/dldt/archive/2019_R1.1.tar.gz
+pv dldt/2019_R1.1.tar.gz | tar xpzf - -C $PWD/dldt
+shopt -s dotglob # Includes filenames beginning with a dot.
+mv -- dldt/dldt-2019_R1.1/* dldt/
+rm -rf dldt/dldt-2019_R1.1 && rm -f dldt/2019_R1.1.tar.gz
 
-pip uninstall opencv-python
+wget -P $PWD/opencv https://github.com/opencv/opencv/archive/4.1.0.tar.gz
+pv opencv/4.1.0.tar.gz  | tar xpzf - -C $PWD/opencv
+mv -- opencv/opencv-4.1.0/* opencv/
+rm -f opencv/4.1.0.tar.gz && rm -rf opencv/opencv-4.1.0
 
-apt-get install -y --no-install-recommends cmake pkg-config xz-utils
+cd dldt/inference-engine/thirdparty/ade
+git clone https://github.com/opencv/ade/ ./
+git reset --hard 562e301
 
-wget https://github.com/opencv/opencv/archive/4.1.0.zip -O opencv-4.1.0.zip
 
-wget https://github.com/opencv/opencv_contrib/archive/4.1.0.zip -O opencv_contrib-4.1.0.zip
+cd ../../../../build/dldt
+sed -i '/add_subdirectory(tests)/s/^/#/g' ../../dldt/inference-engine/CMakeLists.txt
+curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/dldt_setup.sh -o $PWD/dldt_setup.sh
+bash dldt_setup.sh
+make --jobs=$(nproc --all)
 
-unzip opencv-4.1.0.zip
+cd ../opencv
+curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/opencv_setup.sh -o $PWD/opencv_setup.sh
+chmod u+x opencv_setup.sh
+ABS_PORTION=/opencv-python-inference-engine ./opencv_setup.sh
+make --jobs=$(nproc --all)
 
-unzip opencv_contrib-4.1.0.zip
+cd ..
+cp -R /media/common/DOCKER_IMAGES/Tensorflow/Tflow-VNC-Soft/OpenVINO/create_wheel/ .
+cp build/opencv/lib/python3/cv2.cpython*.so create_wheel/cv2/cv2.so
 
-rm -f opencv-4.1.0.zip opencv_contrib-4.1.0.zip
+cp dldt/inference-engine/bin/intel64/Release/lib/*.so create_wheel/cv2/
+cp dldt/inference-engine/bin/intel64/Release/lib/*.mvcmd create_wheel/cv2/
+cp dldt/inference-engine/temp/tbb/lib/libtbb.so.2 create_wheel/cv2/
 
-cd opencv-4.1.0
+chrpath -r '$ORIGIN' create_wheel/cv2/cv2.so
+cd create_wheel
+python setup.py bdist_wheel
 
-mkdir opencv_build && cd opencv_build
+python /media/common/DOCKER_IMAGES/Tensorflow/Tflow-VNC-Soft/OpenVINO/TEST/foo.py
+``` 
 
-nano opencv.sh
-
-cmake -D CMAKE_BUILD_TYPE=Release \
-      -D CMAKE_INSTALL_PREFIX=/usr/local \
-      -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-4.1.0/modules \
-      -D OPENCV_ENABLE_NONFREE=ON \
-      -D WITH_IPP=OFF \
-      -D BUILD_TESTS=OFF \
-      -D BUILD_PERF_TESTS=OFF \
-      -D OPENCV_ENABLE_PKG_CONFIG=ON \
-      -D PYTHON_EXECUTABLE=/usr/local/bin/python3.6 \
-      -D WITH_INF_ENGINE=ON \
-      -D ENABLE_CXX11=ON ..
-	  
-bash opencv.sh
-	  
-make -j$(nproc) 
-
-make install
-
-ldconfig
- ```
 
 ### Reference:
 https://github.com/opencv/opencv/wiki/Intel's-Deep-Learning-Inference-Engine-backend
+https://github.com/banderlog/opencv-python-inference-engine
