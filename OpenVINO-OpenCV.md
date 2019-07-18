@@ -1,4 +1,4 @@
-### Build OpenCV from source with Intel's Deep Learning Inference Engine backend support inside OpenVINO Docker
+### Build OpenCV from source with Intel's Deep Learning Inference Engine backend support inside Docker Container
 
  ```
  pv /media/common/DOCKER_IMAGES/OpenVINO/yi-inference-engine-base.tar | docker load
