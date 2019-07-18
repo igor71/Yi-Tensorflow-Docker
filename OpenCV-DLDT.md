@@ -1,11 +1,26 @@
 #### Build OpenCV from source with Intel's Deep Learning Inference Engine backend support inside Docker Container
 
+##### Preparation
  ```
  pv /media/common/DOCKER_IMAGES/OpenVINO/yi-inference-engine-base.tar | docker load
  docker tag 4ec5f665499d yi/inference-engine:base
  docker run -it -d --name inference_engine -v /media:/media yi/inference-engine:base
  yi-dockeradmin inference_engine
- 
+ ```
+##### Auto Build
+
+```
+bash /media/common/DOCKER_IMAGES/Tensorflow/Tflow-VNC-Soft/OpenVINO/build_whl.sh
+```
+
+##### Testing Installation
+```
+python /media/common/DOCKER_IMAGES/Tensorflow/Tflow-VNC-Soft/OpenVINO/TEST/foo.py
+```
+
+##### Manual Build Build
+
+```
  mkdir opencv-python-inference-engine && cd opencv-python-inference-engine
  mkdir dldt opencv build
  mkdir -p build/dldt
@@ -50,10 +65,8 @@ cp dldt/inference-engine/temp/tbb/lib/libtbb.so.2 create_wheel/cv2/
 chrpath -r '$ORIGIN' create_wheel/cv2/cv2.so
 cd create_wheel
 python setup.py bdist_wheel
-
-python /media/common/DOCKER_IMAGES/Tensorflow/Tflow-VNC-Soft/OpenVINO/TEST/foo.py
+pip install dist/opencv_python_inference_engine-4.1.0.*.whl
 ``` 
-
 
 ### Reference:
 https://github.com/opencv/opencv/wiki/Intel's-Deep-Learning-Inference-Engine-backend
