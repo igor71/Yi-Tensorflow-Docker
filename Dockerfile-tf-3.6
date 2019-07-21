@@ -204,15 +204,14 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.2
 ##########################################
 
   RUN apt-get update && apt-get install -y --no-install-recommends \
-      libgraphviz-dev \
-      pkg-config
+      libgraphviz-dev 
         
-  RUN python3.6 -m pip --no-cache-dir install \
+  RUN python -m pip --no-cache-dir install \
       ipdb \
       imageio \
       graphviz \
       tensorboardX \
-      qpth \
+      qpth==0.0.13 \
       torchnet && \
       apt-get clean && \ 
       rm -rf /var/lib/apt/lists/*
@@ -224,14 +223,12 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.2
       apt-get clean && \ 
       rm -rf /var/lib/apt/lists/*	  
 	  
-  ARG PYTORCH_DEB=http://download.pytorch.org/whl/cu90/torch-1.1.0-cp36-cp36m-linux_x86_64.whl
-  RUN curl -OSL ${PYTORCH_DEB} && \
-      python3.6 -m pip --no-cache-dir install \
-      torch-1.1.0-cp36-cp36m-linux_x86_64.whl \
-      torchvision && \
-      rm -f torch-1.1.0-cp36-cp36m-linux_x86_64.whl && \
+  RUN python -m pip --no-cache-dir install \
+      torch==1.0.1.post2 \
+      torchvision==0.2.2.post2 && \
       apt-get clean && \ 
       rm -rf /var/lib/apt/lists/*
+      
     
    
 ###################################
