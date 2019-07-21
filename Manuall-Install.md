@@ -58,5 +58,9 @@ python ssh_v2_VINO.py
 
 ```
 
+### Reference:
+
+https://software.intel.com/en-us/articles/use-an-inference-engine-api-in-python-to-deploy-the-openvino-toolkit
+
 
  
