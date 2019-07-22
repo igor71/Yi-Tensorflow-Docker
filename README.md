@@ -1,7 +1,9 @@
 # Yi-Tensorflow-Docker
 
+### Basic Image with  CUDA 10
+
 ```
-Build yi/tflow-vnc:X.X.X Image
+Build yi/tflow-vnc:X.X.X-python-3.6-pytorch Image
 
 Ubuntu Version  -->> Ubuntu 16.04.6 LTS
 
@@ -14,7 +16,31 @@ docker inspect -f '{{index .Config.Labels "com.nvidia.cudnn.version"}}' eaf424ee
 CUDNN Version  -->> 7.4.1.5
 ```
 
+### Basic Image with  CUDA 9.0
+
+```
+Build yi/tflow-vnc:X.X.X-python-3.6-pytorch Image
+
+Ubuntu Version  -->> Ubuntu 16.04.6 LTS
+
+docker inspect -f '{{index .Config.Labels "com.nvidia.cuda.version"}}' bdccc25c5e3d
+
+CUDA Version   -->> 9.0.176
+
+docker inspect -f '{{index .Config.Labels "com.nvidia.cudnn.version"}}' bdccc25c5e3d
+
+CUDNN Version  -->> 7.4.1.5
+```
+
 ### HOW-To
+
+*Before running build job on Jenkis, please make following changes:
+ 
+ a. Change Jenknins filename to Jenkinsfile accordind to desired basic docker image will be used for build
+    (CUDA 10 or CUDA 9.0)
+ b. Make appropriate changes inside apropriate Docker file (CUDA & CUDNN ENV) 
+   
+
 1. Check if desired version of tensorflow is available for target server
    ```
    cd /media/common/DOCKER_IMAGES/Tensorflow/Develop/
@@ -55,10 +81,10 @@ CUDNN Version  -->> 7.4.1.5
      ```
      where x.x.x is tensorflow version, e.g. 1.8.0 or 1.4.1... etc
   
-  4. Checking installed tensorflow (and his components) version:
+  4. Checking installed torch (and his components) version:
      ```
      python -c 'import h5py; print(h5py.version.info)'  -->> python 3.6.8
    
-     python -c "import tensorflow as tf; print(tf.__version__)"
+     python -c "import torch; print(torch.__version__)"
      ```
  
