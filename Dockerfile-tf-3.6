@@ -129,18 +129,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     
    
 RUN python -m pip --no-cache-dir install \ 
-    Pillow \
-    toposort \
     networkx \
     pytest \
     ipykernel \
-    jupyter \
-    matplotlib \
     numpy \
     pandas \
     scipy \
     sklearn \
-    tensorlayer \
     scikit-learn \
     tqdm \
     click==6.7 \
@@ -152,30 +147,14 @@ RUN python -m pip --no-cache-dir install \
     scikit-image \
     xmltodict \
     easydict \
-    tflearn \
-    pymongo \
     sacred \
     tables \
-    keras-applications \
-    keras-preprocessing \
     glances \
     gpustat \
     texttable \
     albumentations \
     urllib3==1.21.1 && \
     python -m ipykernel.kernelspec && \
-    apt-get clean && \ 
-    rm -rf /var/lib/apt/lists/*
-    
-    
-################################################################## 
-#              Installing XIAOYI Packages                        #
-##################################################################
-
-ARG INSTALL_DIR=/root/.pip
-RUN if [ ! -d "$INSTALL_DIR" ]; then mkdir -p $INSTALL_DIR; fi
-COPY pip.conf $INSTALL_DIR
-RUN pip install xiaoyi --upgrade &&\
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
@@ -229,20 +208,7 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.2
       apt-get clean && \ 
       rm -rf /var/lib/apt/lists/*
       
-    
-   
-###################################
-# Install TensorFlow GPU version. #
-###################################
-
-RUN cd /
-ARG FTP_PATH
-ARG FILE_NAME
-RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
-    pip --no-cache-dir install --upgrade ${FILE_NAME} && \
-    rm -f ${FILE_NAME}  
-
-  
+       
 ##################################################
 # Configure the build for our CUDA configuration #
 ##################################################
