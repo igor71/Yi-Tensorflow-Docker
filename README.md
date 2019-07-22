@@ -34,10 +34,11 @@ CUDNN Version  -->> 7.4.1.5
 
 ### HOW-To
 
-*Before running build job on Jenkis, please make following changes:
+*Before running build job on Jenkis, please make following changes:*
  
  a. Change Jenknins filename to Jenkinsfile accordind to desired basic docker image will be used for build
     (CUDA 10 or CUDA 9.0)
+    
  b. Make appropriate changes inside apropriate Docker file (CUDA & CUDNN ENV) 
    
 
