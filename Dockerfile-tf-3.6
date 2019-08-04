@@ -9,7 +9,7 @@ MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
 ENV PYTHON_VERSION=3.6.8
 # If this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 19.1.1
+ENV PYTHON_PIP_VERSION 19.2.1
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK, fixing...
 # http://bugs.python.org/issue19846
 ENV LANG C.UTF-8
@@ -208,6 +208,38 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.2
       torchvision==0.2.2.post2 && \
       apt-get clean && \ 
       rm -rf /var/lib/apt/lists/*
+      
+###################################
+#        Install Open MPI.        #
+###################################
+
+RUN mkdir /tmp/openmpi && \
+    cd /tmp/openmpi && \
+    wget https://www.open-mpi.org/software/ompi/v4.0/downloads/openmpi-4.0.0.tar.gz && \
+    tar zxf openmpi-4.0.0.tar.gz && \
+    cd openmpi-4.0.0 && \
+    ./configure --enable-orterun-prefix-by-default && \
+    make -j $(nproc) all && \
+    make install && \
+    ldconfig && \
+    rm -rf /tmp/openmpi
+    
+
+#################################################	
+# Install Horovod, temporarily using CUDA stubs #
+#################################################
+ 
+RUN ldconfig /usr/local/cuda-9.0/targets/x86_64-linux/lib/stubs && \
+    cd /tmp && \
+    git clone --recursive https://github.com/uber/horovod.git && \
+    cd horovod && \
+    python setup.py clean && \
+    python setup.py bdist_wheel && \
+    HOROVOD_GPU_ALLREDUCE=NCCL HOROVOD_WITH_TENSORFLOW=1 pip install --no-cache-dir dist/horovod*.whl && \
+    ldconfig && \
+    cd .. && \
+    cp horovod/examples/keras_mnist_advanced.py . && \
+    rm -rf horovod
       
        
 ##################################################
