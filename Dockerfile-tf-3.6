@@ -191,7 +191,7 @@ RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.2
       rm -rf /var/lib/apt/lists/*	  
 	  
   RUN curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/PyTorch/torch-1.0.1.post2-cp36-cp36m-manylinux1_x86_64.whl -o torch-1.0.1.post2-cp36-cp36m-manylinux1_x86_64.whl && \
-  python -m pip --no-cache-dir install \
+      python -m pip --no-cache-dir install \
       torch-1.0.1.post2-cp36-cp36m-manylinux1_x86_64.whl \
       torchvision==0.2.2.post2 && \
       apt-get clean && \ 
