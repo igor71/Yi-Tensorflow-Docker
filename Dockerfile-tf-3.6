@@ -140,6 +140,7 @@ RUN python -m pip --no-cache-dir install \
     gpustat \
     texttable \
     albumentations \
+    h5py \
     cvxpy \
     urllib3==1.21.1 && \
     python -m ipykernel.kernelspec && \
@@ -147,25 +148,6 @@ RUN python -m pip --no-cache-dir install \
     rm -rf /var/lib/apt/lists/*
     
 
-#################################################
-#     Install HDF5 with multithread support     #
-#################################################
-
-RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.4/src/hdf5-1.10.4.tar.gz -o hdf5-1.10.4.tar.gz && \
-    tar -xvf hdf5-1.10.4.tar.gz && \
-    cd hdf5-1.10.4 && \
-    ./configure --enable-threadsafe --with-pthread=DIR --enable-unsupported --prefix /usr/local && \
-    make -j "$(nproc)" && \
-    make install && \
-    cd .. && \
-    rm -f hdf5-1.10.4.tar.gz && rm -rf hdf5-1.10.4 && \
-    apt-get clean && \ 
-    rm -rf /var/lib/apt/lists/*
-    
-    ENV HDF5_DIR=/usr/local 
-    RUN python3.6 -m pip --no-cache-dir install --no-binary=h5py h5py
-    
-    
 ##########################################
 #       Install PyTorch & Dependences    #
 ##########################################
