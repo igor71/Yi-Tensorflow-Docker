@@ -66,7 +66,7 @@ pipeline {
                         echo 'Removing temp archive.'  
                         rm $WORKSPACE/yi-tflow-vnc-${tensorflow_version}-python-${python_version}-pytorch.tar
 			
-			echo 'Removing Basic Docker Image
+			echo 'Removing Basic Docker Image'
 			docker rmi -f yi/tflow-gui:latest
                    ''' 
 		    }
