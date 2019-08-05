@@ -106,15 +106,14 @@ RUN python3.6 -m pip --no-cache-dir install --index-url http://192.168.1.102:888
 #     Install HDF5 with multithread support     #
 #################################################
 
-RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.20/src/hdf5-1.8.20.tar && \
-    tar -xvf hdf5-1.8.20.tar && \
-    cd hdf5-1.8.20 && \
-    ./configure --enable-threadsafe  --enable-unsupported --prefix /usr/local && \
-    nc=`nproc` && \
-    make -j$nc && \
+RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.4/src/hdf5-1.10.4.tar.gz && \
+    tar -xvf hdf5-1.10.4.tar && \
+    cd hdf5-1.10.4 && \
+    ./configure --enable-threadsafe --with-pthread=DIR --enable-unsupported --prefix /usr/local && \
+    make -j "$(nproc)" && \
     make install && \
     cd .. && \
-    rm hdf5-1.8.20.tar && rm -rf hdf5-1.8.20.tar && \
+    rm -f hdf5-1.10.4.tar && rm -rf hdf5-1.10.4 && \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
