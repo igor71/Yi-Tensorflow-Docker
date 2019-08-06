@@ -86,16 +86,14 @@ RUN python -m pip --no-cache-dir install \
       imageio \
       graphviz \
       tensorboardX \
-      qpth==0.0.13 && \
-      apt-get clean && \ 
-      rm -rf /var/lib/apt/lists/*
+      qpth==0.0.13 
+      
 	  
   RUN git clone https://github.com/pygraphviz/pygraphviz.git && \
       cd pygraphviz && \
       python setup.py install --include-path=/usr/include/graphviz --library-path=/usr/lib/graphviz/ && \
-      rm -rf pygraphviz && \
-      apt-get clean && \ 
-      rm -rf /var/lib/apt/lists/*	  
+      rm -rf pygraphviz
+     	  
 	  
   RUN curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/PyTorch/torch-1.0.1.post2-cp36-cp36m-manylinux1_x86_64.whl -o torch-1.0.1.post2-cp36-cp36m-manylinux1_x86_64.whl && \
       python -m pip --no-cache-dir install \
@@ -103,9 +101,8 @@ RUN python -m pip --no-cache-dir install \
       torchvision==0.2.2.post2 \
       torchnet && \
       apt-get clean && \ 
-      rm -f torch-1.0.1.post2-cp36-cp36m-manylinux1_x86_64.whl && \
-      rm -rf /var/lib/apt/lists/*
-
+      rm -f torch-1.0.1.post2-cp36-cp36m-manylinux1_x86_64.whl
+      
 
 ###################################
 #        Install Open MPI.        #
