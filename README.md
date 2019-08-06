@@ -56,6 +56,14 @@ Build yi/horovod:pytorch-python-3.6 Docker Image (NO GUI)
      python -c 'import torch as th; print(th.__version__)'
      
      python -c 'import horovod as hd; print(hd.__version__)'
+     
+     python -c 'import torch; print(torch.cuda.nccl.version())'
+     
+     Get cuDNN & NCCL version:
+     
+     locate cudnn | grep "libcudnn.so." | tail -n1 | sed -r 's/^.*\.so\.//'
+     
+     locate nccl| grep "libnccl.so" | tail -n1 | sed -r 's/^.*\.so\.//'
       
      ```
   5. Horovod Building Options:
