@@ -1,6 +1,6 @@
 # Yi-Tensorflow-Docker
 
-Build yi/tflow-vnc:X.X.X Image
+Build yi/horovod:pytorch-python-3.6 Docker Image (NO GUI)
 
 ### HOW-To
 1. Check if desired version of tensorflow is available for target server
