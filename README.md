@@ -12,13 +12,13 @@ Build yi/horovod:pytorch-python-3.6 Docker Image (NO GUI)
   
    Chose desired options from drop down menus as following
 
-   target_server --->> server where you need yi/horovod:pytorch-python-3.6 docker image
+   `target_server` --->> server where you need yi/horovod:pytorch-python-3.6 docker image
   
-   python_version --->> python version for above docker image
+   `python_version` --->> python version for above docker image
   
-   tensorflow_version --->> desired tensorflow version (if relevant -->> choose desired version)
+   `tensorflow_version` --->> desired tensorflow version (if relevant -->> choose desired version)
    
-   cuda_version --->> desired cuda version
+   `cuda_version` --->> desired cuda version
   
    And finally, click on "BUILD" button
   
