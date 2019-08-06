@@ -64,6 +64,12 @@ Build yi/horovod:pytorch-python-3.6 Docker Image (NO GUI)
      locate cudnn | grep "libcudnn.so." | tail -n1 | sed -r 's/^.*\.so\.//'
      
      locate nccl| grep "libnccl.so" | tail -n1 | sed -r 's/^.*\.so\.//'
+     
+     Collecting environment Information:
+     
+     cd /tmp
+     
+     python collect_env.py
       
      ```
   5. Horovod Building Options:
