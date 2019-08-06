@@ -49,12 +49,14 @@ Build yi/horovod:pytorch-python-3.6 Docker Image (NO GUI)
      horovodrun -np 12 -H server-22:8,server-19:4 -p 12345 python keras_mnist_advanced.py -->> multiple servers check
      ```
   
-  4. Checking installed Pytorch (and his components) version:
+  4. Checking installed Pytorch & Horovod (and their components) version:
      ```
      python -c 'import h5py; print(h5py.version.info)' 
   
      python -c 'import torch as th; print(th.__version__)'
-   
+     
+     python -c 'import horovod as hd; print(hd.__version__)'
+      
      ```
   5. Horovod Building Options:
   
