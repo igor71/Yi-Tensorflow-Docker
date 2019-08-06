@@ -35,7 +35,7 @@ Build yi/horovod:pytorch-python-3.6 Docker Image (NO GUI)
      
      On Master:
      
-     yi-dockeradmin horovod
+     yi-dockeradmin horovod-pytorch
      
      horovodrun -np 4 -H localhost:4 python keras_mnist_advanced.py -->> single server check
      
