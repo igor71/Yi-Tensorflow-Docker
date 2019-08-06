@@ -40,11 +40,11 @@ Build yi/horovod:pytorch-python-3.6 Docker Image (NO GUI)
      ```
      On Master Server -22:
      
-     nvidia-docker run --network=host --name=horovod -v /media:/media -it -d --privileged yi/horovod:pytorch-python-3.6
+     nvidia-docker run --network=host --name=horovod-pytorch -v /media:/media -it -d --privileged yi/horovod:pytorch-python-3.6
      
      On Slave Servers:
      
-     nvidia-docker run --network=host --name=horovod -v /media:/media -it -d --privileged yi/horovod:pytorch-python-3.6 bash -c "/usr/sbin/sshd -p 12345; sleep infinity"
+     nvidia-docker run --network=host --name=horovod-pytorch -v /media:/media -it -d --privileged yi/horovod:pytorch-python-3.6 bash -c "/usr/sbin/sshd -p 12345; sleep infinity"
      
      On Master:
      
