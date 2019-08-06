@@ -2,7 +2,7 @@
 
 Build yi/horovod:pytorch-python-3.6 Docker Image (NO GUI)
 
-### HOW-To
+### HOW-TO
 
 2. Open in chrome browser:
 
