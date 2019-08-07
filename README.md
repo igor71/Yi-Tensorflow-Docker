@@ -33,6 +33,8 @@ Build yi/horovod:pytorch-python-3.6 Docker Image (NO GUI)
      
      nvidia-docker run --network=host --name=horovod-pytorch -v /media:/media -it -d --privileged yi/horovod:pytorch-python-3.6 bash -c "/usr/sbin/sshd -p 12345; sleep infinity"
      
+     On Ubuntu-18: docker run --runtime=nvidia --network=host --name=horovod-pytorch -v /media:/media -it -d --privileged yi/horovod:pytorch-python-3.6
+     
      On Master:
      
      yi-dockeradmin horovod-pytorch
