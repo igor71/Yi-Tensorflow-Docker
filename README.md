@@ -2,7 +2,7 @@
 
 Build yi/tflow-vnc:X.X.X Image wit OpenVINO
 
-### Note, Current OpenVINO version (1.144) working only with TF v.1.12.0 only (CUDA 9.0)
+### Note, Current OpenVINO version (2.275) working only with TF v.1.12.0 only (CUDA 9.0)
 
 ### HOW-To
 1. Check if desired version of tensorflow is available for target server
