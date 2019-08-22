@@ -187,6 +187,9 @@ RUN cd /tmp && \
     ldconfig && \
     cd /tmp && \
     rm -rf l_openvino_toolkit_p_2019.1.144* && \
+    cd /opt/intel/openvino_2019.1.144/python/python3.6/openvino/inference_engine && \
+    sed -i '/IENetReader/d' __init__.py && \
+    sed -i '$ a __all__ = ["IENetwork", "IEPlugin"] #, "IENetReader"]' __init__.py && \
     cd /opt/intel/openvino_2019.1.144/deployment_tools/inference_engine/samples/python_samples/classification_sample && \
     sed -i "24 a sys.path.append('/opt/intel/openvino_2019.1.144/python/python3.6/')" classification_sample.py && \
     apt-get clean && \ 
