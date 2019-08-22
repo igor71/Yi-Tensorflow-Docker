@@ -172,11 +172,11 @@ RUN python -m pip --no-cache-dir install \
 #                Installing OpenVINO             #
 ##################################################
 
-ARG VER=l_openvino_toolkit_p_2019.2.275.tgz
+ARG VER=l_openvino_toolkit_p_2019.2.242.tgz
 RUN cd /tmp && \
     curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/${VER} -o ${VER} && \
     pv -f ${VER} | tar xpzf - -C $PWD && \
-    cd l_openvino_toolkit_p_2019.2.275 && \
+    cd l_openvino_toolkit_p_2019.2.242 && \
     sed -i 's/decline/accept/g' silent.cfg && \
     ./install.sh -s silent.cfg --ignore-signature && \
     cd /opt/intel/openvino/install_dependencies && \
@@ -185,10 +185,7 @@ RUN cd /tmp && \
     pv -f /opt/intel/openvino/bin/setupvars.sh > /tmp/setupvars.sh && \
     chmod o+x /tmp/setupvars.sh && \
     cd /tmp && \
-    rm -rf l_openvino_toolkit_p_2019.2.275* && \
-    cd /opt/intel/openvino_2019.2.275/python/python3.6/openvino/inference_engine && \
-    sed -i '/IENetReader/d' __init__.py && \
-    sed -i '$ a __all__ = ["IENetwork", "IEPlugin"] #, "IENetReader"]' __init__.py && \
+    rm -rf l_openvino_toolkit_p_2019.2.242* && \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
@@ -215,7 +212,7 @@ RUN  printf '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
 |                                  |\n\
 | Build Server Running Ubuntu 16   |\n\
 | Using As Linux Build Environment |\n\
-| Based On OpenVINO v.2019.2.275   |\n\
+| Based On OpenVINO v.2019.2.242   |\n\
 |                                  |\n\
 ||||||||||||||||||||||||||||||||||||\n\
 \n "\
