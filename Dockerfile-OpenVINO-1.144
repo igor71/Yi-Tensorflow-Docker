@@ -173,10 +173,9 @@ RUN python -m pip --no-cache-dir install \
 ##################################################
 
 ARG VER=l_openvino_toolkit_p_2019.1.141.tgz
+COPY Config/openvino.conf_2019.1.144 /etc/ld.so.conf.d/openvino.conf
 RUN cd /tmp && \
     curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/${VER} -o ${VER} && \
-    curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/openvino.conf_2019.1.144 -o openvino.conf_2019.1.144 && \
-    mv openvino.conf_2019.1.144 /etc/ld.so.conf.d/openvino.conf && \
     pv -f ${VER} | tar xpzf - -C $PWD && \
     cd l_openvino_toolkit_p_2019.1.141 && \
     sed -i 's/decline/accept/g' silent.cfg && \
