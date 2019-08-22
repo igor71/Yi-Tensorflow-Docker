@@ -177,7 +177,7 @@ COPY Config/openvino.conf_2019.1.144 /etc/ld.so.conf.d/openvino.conf
 RUN cd /tmp && \
     curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/${VER} -o ${VER} && \
     pv -f ${VER} | tar xpzf - -C $PWD && \
-    cd l_openvino_toolkit_p_2019.1.141 && \
+    cd l_openvino_toolkit_p_2019.1.144 && \
     sed -i 's/decline/accept/g' silent.cfg && \
     ./install.sh -s silent.cfg --ignore-signature && \
     cd /opt/intel/openvino/install_dependencies && \
