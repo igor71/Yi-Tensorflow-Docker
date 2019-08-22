@@ -172,7 +172,7 @@ RUN python -m pip --no-cache-dir install \
 #                Installing OpenVINO             #
 ##################################################
 
-ARG VER=l_openvino_toolkit_p_2019.1.141.tgz
+ARG VER=l_openvino_toolkit_p_2019.1.144.tgz
 COPY Config/openvino.conf_2019.1.144 /etc/ld.so.conf.d/openvino.conf
 RUN cd /tmp && \
     curl -OSL ftp://jenkins-cloud/pub/Tflow-VNC-Soft/OpenVINO/${VER} -o ${VER} && \
