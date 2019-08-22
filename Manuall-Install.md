@@ -10,13 +10,13 @@ cd Yi-Tensorflow-Docker
 ### Build the docker:
 
  ```
-docker build -f Dockerfile-OpenVINO-Base -t yi/openvino:1.144 .
+docker build -f Dockerfile-OpenVINO-Base -t yi/openvino:2.275 .
 
  ```
  ### Running docker container:
  
  ```
- docker run -it -d  --name openvino -v /media:/media yi/openvino:1.144
+ docker run -it -d  --name openvino -v /media:/media yi/openvino:2.275
  
  yi-dockeradmin openvino
  
@@ -31,13 +31,13 @@ docker build -f Dockerfile-OpenVINO-Base -t yi/openvino:1.144 .
 
 ./demo_squeezenet_download_convert_run.sh
 
-pv /media/common/DOWNLOADS/UBUNTU/OpenVINO/DEMO/squeezenet1.1.xml > /opt/intel/openvino_2019.1.144/deployment_tools/demo/squeezenet1.1.xml
+pv /media/common/DOWNLOADS/UBUNTU/OpenVINO/DEMO/squeezenet1.1.xml > /opt/intel/openvino_2019.2.275/deployment_tools/demo/squeezenet1.1.xml
 
-pv /media/common/DOWNLOADS/UBUNTU/OpenVINO/DEMO/squeezenet1.1.bin > /opt/intel/openvino_2019.1.144/deployment_tools/demo/squeezenet1.1.bin
+pv /media/common/DOWNLOADS/UBUNTU/OpenVINO/DEMO/squeezenet1.1.bin > /opt/intel/openvino_2019.2.275/deployment_tools/demo/squeezenet1.1.bin
 
-cd /opt/intel/openvino_2019.1.144/deployment_tools/inference_engine/samples/python_samples
+cd /opt/intel/openvino_2019.2.275/deployment_tools/inference_engine/samples/python_samples
 
-python classification_sample/classification_sample.py -m /opt/intel/openvino_2019.1.144/deployment_tools/demo/squeezenet1.1.xml -i /opt/intel/openvino_2019.1.144/deployment_tools/demo/car.png
+python classification_sample/classification_sample.py -m /opt/intel/openvino_2019.2.275/deployment_tools/demo/squeezenet1.1.xml -i /opt/intel/openvino_2019.2.275/deployment_tools/demo/car.png
 
 ```
 
