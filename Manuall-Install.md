@@ -10,7 +10,7 @@ cd Yi-Tensorflow-Docker
 ### Build the docker:
 
  ```
-docker build -f Dockerfile-OpenVINO-Base -t yi/openvino:1.144 .
+docker build -f Dockerfile-OpenVINO-1.144 -t yi/openvino:1.144 .
 
  ```
  ### Running docker container:
