@@ -25,7 +25,6 @@ docker build -f Dockerfile-OpenVINO-1.144 -t yi/openvino:1.144 .
  ### Running tests as root inside docker container:
  
  ```
- source /opt/intel/openvino/bin/setupvars.sh
  
  cd /opt/intel/openvino/deployment_tools/demo
 
@@ -47,8 +46,6 @@ python classification_sample/classification_sample.py -m /opt/intel/openvino_201
 su openvino
 
 cd /tmp
-
-source /tmp/setupvars.sh
 
 cp -R /media/common/USERS/Sagi/OpenVINO .
 
