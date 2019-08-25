@@ -188,7 +188,7 @@ RUN cd /tmp && \
     cd /tmp && \
     rm -rf l_openvino_toolkit_p_2019.2.242* && \
     cd /opt/intel/openvino_2019.2.242/deployment_tools/inference_engine/samples/python_samples/classification_sample && \
-    sed -i "24 a sys.path.append('/opt/intel/openvino_2019.1.144/python/python3.6/')" classification_sample.py && \
+    sed -i "24 a sys.path.append('/opt/intel/openvino_2019.2.242/python/python3.6/')" classification_sample.py && \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
