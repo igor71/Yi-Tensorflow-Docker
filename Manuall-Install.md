@@ -39,6 +39,8 @@ cd /opt/intel/openvino_2019.1.144/deployment_tools/inference_engine/samples/pyth
 
 python classification_sample/classification_sample.py -m /opt/intel/openvino_2019.1.144/deployment_tools/demo/squeezenet1.1.xml -i /opt/intel/openvino_2019.1.144/deployment_tools/demo/car.png
 
+
+
 OpenVINO---2.242
  
  cd /opt/intel/openvino/deployment_tools/demo
