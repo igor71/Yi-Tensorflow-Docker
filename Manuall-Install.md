@@ -12,13 +12,17 @@ cd Yi-Tensorflow-Docker
  ```
 docker build -f Dockerfile-OpenVINO-1.144 -t yi/openvino:1.144 .
 
+docker build -f Dockerfile-OpenVINO-2.242 -t yi/openvino:2.242 .
+
  ```
  ### Running docker container:
  
  ```
- docker run -it -d  --name openvino -v /media:/media yi/openvino:1.144
+ docker run -it -d  --name openvino-1.144 -v /media:/media yi/openvino:1.144
  
- yi-dockeradmin openvino
+ docker run -it -d  --name openvino-2.242 -v /media:/media yi/openvino:2.242
+ 
+ yi-dockeradmin openvino-X.XXX
  
  ```
  
