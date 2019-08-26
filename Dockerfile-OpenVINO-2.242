@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 #################################################
 #  Update repositories -- we will need them all #
@@ -76,6 +76,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	libffi-dev \
 	zlib1g-dev \
 	libsqlite3-dev \
+	dirmngr \
+	gpg-agent \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV GPG_KEY 0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
@@ -85,7 +87,7 @@ RUN set -ex \
 	&& wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" \
 	&& wget -O python.tar.xz.asc "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz.asc" \
 	&& export GNUPGHOME="$(mktemp -d)" \
-	&& gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys "$GPG_KEY" \
+	&& gpg --batch --keyserver hkp://keyserver.ubuntu.com --recv-keys "$GPG_KEY" \
 	&& gpg --batch --verify python.tar.xz.asc python.tar.xz \
 	&& { command -v gpgconf > /dev/null && gpgconf --kill all || :; } \
 	&& rm -rf "$GNUPGHOME" python.tar.xz.asc \
@@ -121,9 +123,8 @@ RUN cd /usr/local/bin \
         && ln -s idle3 idle \
 	&& ln -s pydoc3 pydoc \
 	&& ln -s python3 python \
-	&& ln -s /usr/local/bin/python3.6 /usr/bin/python3.6 \
+	&& ln -s /usr/local/bin/python3.6 /usr/bin/python3.6.8 \
 	&& ln -s python3-config python-config
-
 
 ##################################
 # Installing PIP and Dependences #
@@ -147,7 +148,7 @@ RUN set -ex; \
 			\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
 		\) -exec rm -rf '{}' +; \
 	rm -f get-pip.py
-	
+
 
 #################################
 #     Python Installations      #
@@ -155,14 +156,10 @@ RUN set -ex; \
 
 RUN python -m pip --no-cache-dir install \
     ipykernel \
-    pillow \
-    opencv-python \
+    image \
     matplotlib \
-    numpy \
-    scipy \
-    sklearn \
-    h5py \
-    && \
+    opencv-python \
+    numpy  && \
     python -m ipykernel.kernelspec && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -189,10 +186,10 @@ RUN cd /tmp && \
     rm -rf l_openvino_toolkit_p_2019.2.242* && \
     cd /opt/intel/openvino_2019.2.242/deployment_tools/inference_engine/samples/python_samples/classification_sample && \
     sed -i "24 a sys.path.append('/opt/intel/openvino_2019.2.242/python/python3.6/')" classification_sample.py && \
-    apt-get clean && \ 
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-    
-    
+
+
 #######################################
 # Set User OPENVINO User To The image #
 #######################################
@@ -213,7 +210,7 @@ RUN  printf '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
         ; printf "\
 ||||||||||||||||||||||||||||||||||||\n\
 |                                  |\n\
-| Build Server Running Ubuntu 16   |\n\
+| Build Server Running Ubuntu 18   |\n\
 | Using As Linux Build Environment |\n\
 | Based On OpenVINO v.2019.2.242   |\n\
 |                                  |\n\
