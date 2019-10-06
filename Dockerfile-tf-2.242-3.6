@@ -107,7 +107,7 @@ RUN python3.6 -m pip --no-cache-dir install --index-url http://192.168.1.102:888
 #################################################
 
 RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.4/src/hdf5-1.10.4.tar.gz && \
-    tar -xvf hdf5-1.10.4.tar && \
+    tar -xvf hdf5-1.10.4.tar.gz && \
     cd hdf5-1.10.4 && \
     ./configure --enable-threadsafe --with-pthread=DIR --enable-unsupported --prefix /usr/local && \
     make -j "$(nproc)" && \
