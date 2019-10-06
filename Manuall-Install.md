@@ -72,6 +72,12 @@ cp -R /media/common/USERS/Sagi/OpenVINO .
 
 cd OpenVINO/
 
+nano ssh_v2_VINO.py 
+
+Change OpenVino version in following line:
+
+sys.path.append("/opt/intel/openvino_2019.X.XXX/python/python3.6/")
+
 python ssh_v2_VINO.py
 
 ```
