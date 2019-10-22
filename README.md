@@ -5,7 +5,7 @@
 ```
 Build yi/tflow-vnc:X.X.X-python-3.6-pytorch Image
 
-Ubuntu Version  -->> Ubuntu 16.04.6 LTS
+Ubuntu Version  -->> Ubuntu 18.04.2 LTS
 
 docker inspect -f '{{index .Config.Labels "com.nvidia.cuda.version"}}' eaf424ee8e35
 
