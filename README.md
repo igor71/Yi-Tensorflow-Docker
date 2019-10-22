@@ -13,7 +13,7 @@ CUDA Version   -->> 10.0.130
 
 docker inspect -f '{{index .Config.Labels "com.nvidia.cudnn.version"}}' 0a1b1a956cdb
 
-CUDNN Version  -->> 7.4.1.5
+CUDNN Version  -->> 7.5.0.56
 ```
 
 ### Basic Image with  CUDA 9.0
