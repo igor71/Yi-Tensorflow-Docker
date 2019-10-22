@@ -7,11 +7,11 @@ Build yi/tflow-vnc:X.X.X-python-3.6-pytorch Image
 
 Ubuntu Version  -->> Ubuntu 18.04.2 LTS
 
-docker inspect -f '{{index .Config.Labels "com.nvidia.cuda.version"}}' eaf424ee8e35
+docker inspect -f '{{index .Config.Labels "com.nvidia.cuda.version"}}' 0a1b1a956cdb
 
 CUDA Version   -->> 10.0.130
 
-docker inspect -f '{{index .Config.Labels "com.nvidia.cudnn.version"}}' eaf424ee8e35
+docker inspect -f '{{index .Config.Labels "com.nvidia.cudnn.version"}}' 0a1b1a956cdb
 
 CUDNN Version  -->> 7.4.1.5
 ```
