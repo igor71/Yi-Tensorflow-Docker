@@ -36,10 +36,10 @@ CUDNN Version  -->> 7.4.1.5
 
 *Before running build job on Jenkis, please make following changes:*
  
- a. Change Jenknins filename to Jenkinsfile accordind to desired basic docker image will be used for build
-    (CUDA 10 or CUDA 9.0)
+ a. *Change Jenknins filename to Jenkinsfile accordind to desired basic docker image will be used for build
+    (CUDA 10 or CUDA 9.0)*
     
- b. Make appropriate changes inside the Docker file that will be used in build (CUDA & CUDNN ENV) 
+ b. *Make appropriate changes inside the Docker file that will be used in build proccess (CUDA & CUDNN ENV)* 
    
 
 1. Check if desired version of tensorflow is available for target server
