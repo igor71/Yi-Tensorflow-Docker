@@ -4,7 +4,7 @@ Build yi/tflow-vnc:X.X.X Image
 
 ### HOW-To
 
-0. Rename Jenkinsfile-CUDA-X.X to Jenkinsfile accrding to desired CUDA version in basic image to be used
+   *Rename Jenkinsfile-CUDA-X.X to Jenkinsfile accrding to desired CUDA version in basic image to be used*
 1. Check if desired version of tensorflow is available for target server
    ```
    cd /media/common/DOCKER_IMAGES/Tensorflow/Develop/
