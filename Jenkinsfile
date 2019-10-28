@@ -5,23 +5,23 @@ pipeline {
             steps {
                 sh '''#!/bin/bash -xe
                    # Bacic Docker Image For Tensorflow & Horovod Version
-                      image_id="$(docker images -q yi/tflow-gui:horovod)"
+                      image_id="$(docker images -q yi/tflow-gui:latest)"
                       echo "Basic Docker Image For Current Branch Is: $image_id"
 		      
                       # Check If Docker Image Exist On Desired Server
                       if [[ "$(docker images -q yi/tflow-gui:latest 2> /dev/null)" == "" ]]; then
                          pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/yi-tflow-gui-horovod-cuda-10.tar | docker load
-			                   docker tag ae8112ebdc9a yi/tflow-gui:latest
+			 docker tag ae269883dc35 yi/tflow-gui:latest
 			 
-		                 elif [ "$image_id" != "ae8112ebdc9a" ]; then
-		                     echo "Wrong Docker Image!!! Removing..."
-				     docker rmi -f yi/tflow-gui:latest
-				     pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/yi-tflow-gui-horovod-cuda-10.tar | docker load
-				     docker tag ae8112ebdc9a yi/tflow-gui:latest
+		      elif [ "$image_id" != "ae269883dc35" ]; then
+		         echo "Wrong Docker Image!!! Removing..."
+		         docker rmi -f yi/tflow-gui:latest
+		         pv -f /media/common/DOCKER_IMAGES/Tflow-GUI/10.0-cudnn7-base/yi-tflow-gui-horovod-cuda-10.tar | docker load
+		         docker tag ae269883dc35 yi/tflow-gui:latest
 		      
-                                else
-                                     echo "Docker Image Already Exist"
-                                fi
+                      else
+                         echo "Docker Image Already Exist"
+                      fi
 		   '''
             }
         }
