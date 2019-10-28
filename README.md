@@ -4,7 +4,7 @@ Build yi/tflow-vnc:X.X.X Image
 
 ### HOW-To
 
-   *Rename Jenkinsfile-CUDA-X.X to Jenkinsfile according to desired CUDA version in basic image to be used*
+   *Rename Jenkinsfile-CUDA-X.X to Jenkinsfile & Dockerfile-tf-3.6-CUDA-X.X to Dockerfile-tf-3.6 according to desired CUDA version in basic docker image to be used*
 1. Check if desired version of tensorflow is available for target server
    ```
    cd /media/common/DOCKER_IMAGES/Tensorflow/Develop/
