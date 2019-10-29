@@ -163,8 +163,8 @@ RUN python -m pip --no-cache-dir install \
 ###################################
 
 RUN cd /
-ARG FTP_PATH=ftp://jenkins-cloud/pub/Tensorflow-1.15.0-10.0-cudnn7-devel-ubuntu18.04-Server_19.20/tensorflow-1.15.0-cp36-cp36m-linux_x86_64.whl
-ARG FILE_NAME=tensorflow-1.15.0-cp36-cp36m-linux_x86_64.whl
+ARG FTP_PATH
+ARG FILE_NAME
 RUN curl -OSL ${FTP_PATH} -o ${FILE_NAME} && \
     pip --no-cache-dir install --upgrade ${FILE_NAME} && \
     rm -f ${FILE_NAME}
