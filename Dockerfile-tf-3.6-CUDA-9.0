@@ -2,6 +2,7 @@ FROM yi/tflow-gui:latest
 
 MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
+ARG TF_BRANCH=r1.10.1
 
 #################################################
 #     Python 3.6 installations for dev          #
@@ -38,12 +39,7 @@ ENV PYTHON_VERSION=${python}
 ############################################
 
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
-        build-essential \
         cmake \
-        git \
-        curl \
-        vim \
-        wget \
         pv \
         ca-certificates \
         libsm6 \
@@ -163,7 +159,7 @@ RUN printf '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
 ||||||||||||||||||||||||||||||||||||\n\
 |                                  |\n\
 | Docker Image Running Ubuntu 16   |\n\
-| With TensorFlow ver.1.13.1 and   |\n\
+| With TensorFlow ${TF_BRANCH} and      |\n\
 | Build from The Sources Horovod   |\n\
 |                                  |\n\
 ||||||||||||||||||||||||||||||||||||\n\
