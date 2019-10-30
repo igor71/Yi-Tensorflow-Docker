@@ -38,13 +38,17 @@ Build yi/tflow-vnc:X.X.X Image
   3. Once build completed, run the docker as foolwing:
   
      ```
-     On Master Server -22:
+     On Master Server:
      
      nvidia-docker run --network=host --name=horovod -v /media:/media -it -d --privileged yi/horovod:1.13.1-python-3.6
+     
+     docker run --runtime=nvidia --network=host --name horovod -v /media:/media it -d --privileged yi/horovod:1.13.1-python-3.6
      
      On Slave Servers:
      
      nvidia-docker run --network=host --name=horovod -v /media:/media -it -d --privileged yi/horovod:1.13.1-python-3.6 bash -c "/usr/sbin/sshd -p 12345; sleep infinity"
+     
+     docker run --runtime=nvidia --network=host --name horovod -v /media:/media it -d --privileged yi/horovod:1.13.1-python-3.6 bash -c "/usr/sbin/sshd -p 12345; sleep infinity"
      
      On Master:
      
