@@ -1,7 +1,8 @@
 FROM nvidia/cuda:9.0-devel-ubuntu16.04
 
 # TensorFlow version is tightly coupled to CUDA and cuDNN so it should be selected carefully
-ENV CUDNN_VERSION=7.4.1.5-1+cuda9.0
+ENV CUDNN_VERSION=7.6.4.38-1+cuda9.0
+ARG TF_BRANCH=r1.13.1
 
 
 #################################################
@@ -163,7 +164,7 @@ RUN printf '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
 ||||||||||||||||||||||||||||||||||||\n\
 |                                  |\n\
 | Docker Image Running Ubuntu 16   |\n\
-| With TensorFlow ver.1.13.1 and   |\n\
+| With TensorFlow ${TF_BRANCH} and |\n\
 | Build from The Sources Horovod   |\n\
 |                                  |\n\
 ||||||||||||||||||||||||||||||||||||\n\
