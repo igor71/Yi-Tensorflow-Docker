@@ -110,21 +110,19 @@ ENV PYTHON_VERSION=${python}
 ############################################
 
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
-        build-essential \
         cmake \
+	g++-4.8 \
 	mlocate \
-        git \
-        curl \
-        nano \
-	vim \
-        wget \
         pv \
         ca-certificates \
         libsm6 \
         libxext6 \
         libxrender-dev \
         libjpeg-dev \
-        libpng-dev 
+        libpng-dev \
+	librdmacm1 \
+        libibverbs1 \
+        ibverbs-providers
 	
 	
 ############################################	
@@ -189,13 +187,13 @@ RUN git clone --branch=master --depth=1 https://github.com/NVIDIA/nccl.git && \
 # Install Horovod, temporarily using CUDA stubs #
 #################################################
 
-RUN ldconfig /usr/local/cuda-10.0/targets/x86_64-linux/lib/stubs && \
+RUN ldconfig /usr/local/cuda/targets/x86_64-linux/lib/stubs && \
     cd /tmp && \
     git clone --recursive https://github.com/uber/horovod.git && \
     cd horovod && \
     python setup.py clean && \
     python setup.py bdist_wheel && \
-    HOROVOD_GPU_ALLREDUCE=NCCL HOROVOD_WITH_TENSORFLOW=1 pip install --no-cache-dir dist/horovod*.whl && \
+    HOROVOD_GPU_ALLREDUCE=NCCL HOROVOD_WITH_TENSORFLOW=1 HOROVOD_WITHOUT_PYTORCH=1 HOROVOD_WITHOUT_MXNET=1 pip install --no-cache-dir dist/horovod*.whl && \
     ldconfig && \
     cd .. && \
     cp horovod/examples/keras_mnist_advanced.py . && \
@@ -252,7 +250,7 @@ RUN printf '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
 ||||||||||||||||||||||||||||||||||||\n\
 |                                  |\n\
 | Docker Image Running Ubuntu 16   |\n\
-| With TensorFlow ${TF_BRANCH} and |\n\
+| With TensorFlow ${TF_BRANCH} and      |\n\
 | Build from The Sources Horovod   |\n\
 |                                  |\n\
 ||||||||||||||||||||||||||||||||||||\n\
