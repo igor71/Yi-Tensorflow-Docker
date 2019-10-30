@@ -164,7 +164,7 @@ RUN printf '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
 ||||||||||||||||||||||||||||||||||||\n\
 |                                  |\n\
 | Docker Image Running Ubuntu 16   |\n\
-| With TensorFlow ${TF_BRANCH} and |\n\
+| With TensorFlow ${TF_BRANCH} and      |\n\
 | Build from The Sources Horovod   |\n\
 |                                  |\n\
 ||||||||||||||||||||||||||||||||||||\n\
