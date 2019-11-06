@@ -84,8 +84,13 @@ CUDNN Version  -->> 7.4.1.5
   
   4. Checking installed torch (and his components) version:
      ```
-     python -c 'import h5py; print(h5py.version.info)'  -->> python 3.6.8
+     python -c 'import h5py; print(h5py.version.info)'  
    
      python -c "import torch; print(torch.__version__)"
+     
+     python -c 'import tensorflow as tf; print(tf.__version__)' 
+
+     python -c "import tensorflow as tf; print(tf.contrib.eager.num_gpus())"
+    
      ```
  
