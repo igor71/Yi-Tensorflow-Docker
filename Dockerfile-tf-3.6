@@ -26,6 +26,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	libffi-dev \
 	zlib1g-dev \
 	libsqlite3-dev \
+	libncurses5 \
+	libncurses5-dev \
+	libncursesw5 \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV GPG_KEY 0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
@@ -116,7 +119,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     
    
 RUN python -m pip --no-cache-dir install \ 
-    networkx \
+    networkx==2.3 \
     pytest \
     ipykernel \
     numpy \
