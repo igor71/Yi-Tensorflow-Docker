@@ -9,7 +9,7 @@ MAINTAINER Igor Rabkin <igor.rabkin@xiaoyi.com>
 
 ENV PYTHON_VERSION=3.6.8
 # If this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 19.0.3
+ENV PYTHON_PIP_VERSION 19.3.1
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK, fixing...
 # http://bugs.python.org/issue19846
 ENV LANG C.UTF-8
@@ -26,6 +26,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	libffi-dev \
 	zlib1g-dev \
 	libsqlite3-dev \
+	libncurses5 \
+	libncurses5-dev \
+	libncursesw5 \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV GPG_KEY 0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
@@ -58,9 +61,9 @@ RUN set -ex \
 	\
 	&& find /usr/local -depth \
 		\( \
-			\( -type d -a \( -name test -o -name tests \) \) \
-			-o \
-			\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
+		\( -type d -a \( -name test -o -name tests \) \) \
+		-o \
+		\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
 		\) -exec rm -rf '{}' + \
 	&& rm -rf /usr/src/python \
 	\
@@ -91,9 +94,9 @@ RUN set -ex; \
 	\
 	find /usr/local -depth \
 		\( \
-			\( -type d -a \( -name test -o -name tests \) \) \
-			-o \
-			\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
+		\( -type d -a \( -name test -o -name tests \) \) \
+		-o \
+		\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
 		\) -exec rm -rf '{}' +; \
 	rm -f get-pip.py
 
@@ -184,14 +187,14 @@ RUN pip install xiaoyi --upgrade &&\
 #     Install HDF5 with multithread support     #
 #################################################
 
-RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.5/src/hdf5-1.10.5.tar.gz -o hdf5-1.10.5.tar.gz && \
-    pv hdf5-1.10.5.tar.gz | tar xpzf - -C $PWD && \
-    cd hdf5-1.10.5 && \
-    ./configure --enable-threadsafe --enable-unsupported --enable-parallel --enable-shared --prefix /usr/local && \
+RUN curl -OSL https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.20/src/hdf5-1.8.20.tar && \
+    tar -xvf hdf5-1.8.20.tar && \
+    cd hdf5-1.8.20 && \
+    ./configure --enable-threadsafe  --enable-unsupported --prefix /usr/local && \
     make -j "$(nproc)" && \
     make install && \
     cd .. && \
-    rm -f hdf5-1.10.5.tar.gz && rm -rf hdf5-1.10.5 && \
+    rm hdf5-1.8.20.tar && rm -rf hdf5-1.8.20.tar && \
     apt-get clean && \ 
     rm -rf /var/lib/apt/lists/*
     
